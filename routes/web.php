@@ -1,63 +1,128 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\MatakuliahController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KRSController;
+use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\KHSController;
+use App\Http\Controllers\UserController;
 
+/*
+|--------------------------------------------------------------------------
+| AUTHENTIKASI (Login/Register)
+|--------------------------------------------------------------------------
+*/
 
-// Login
-Route::get('/login', function () {
-    return view('auth.login');
-});
+// Halaman Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
-// Register
-Route::get('/register', function () {
-    return view('auth.register');
-});
+// Halaman Register (opsional)
+Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [LoginController::class, 'register']);
 
-// Dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Mahasiswa
-Route::get('/mahasiswa', function () {
-    return view('mahasiswa.index');
-});
-Route::get('/mahasiswa/tambah', function () {
-    return view('mahasiswa.create');
-});
-Route::get('/mahasiswa/edit/{id}', function ($id) {
-    return view('mahasiswa.edit', ['id' => $id]);
-});
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+*/
 
-// Kelas
-Route::get('/kelas', function () {
-    return view('kelas.index');
-});
-Route::get('/kelas/tambah', function () {
-    return view('kelas.create');
-});
-Route::get('/kelas/edit/{id}', function ($id) {
-    return view('kelas.edit', ['id' => $id]);
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Nilai
-Route::get('/nilai', function () {
-    return view('nilai.index');
-});
+/*
+|--------------------------------------------------------------------------
+| MANAJEMEN USER
+|--------------------------------------------------------------------------
+*/
 
-// Pembayaran
-Route::get('/pembayaran', function () {
-    return view('pembayaran.index');
-});
-Route::get('/pembayaran/tambah', function () {
-    return view('pembayaran.create');
-});
-Route::get('/pembayaran/edit/{id}', function ($id) {
-    return view('pembayaran.edit', ['id' => $id]);
-});
+Route::resource('user', UserController::class);
 
+/*
+|--------------------------------------------------------------------------
+| MANAJEMEN MAHASISWA
+|--------------------------------------------------------------------------
+*/
 
+Route::resource('mahasiswa', MahasiswaController::class);
 
+/*
+|--------------------------------------------------------------------------
+| MANAJEMEN DOSEN
+|--------------------------------------------------------------------------
+*/
 
+Route::resource('dosen', DosenController::class);
 
+/*
+|--------------------------------------------------------------------------
+| MANAJEMEN PRODI
+|--------------------------------------------------------------------------
+*/
 
+Route::resource('prodi', ProdiController::class);
+
+/*
+|--------------------------------------------------------------------------
+| MANAJEMEN MATA KULIAH
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('matakuliah', MatakuliahController::class);
+
+/*
+|--------------------------------------------------------------------------
+| MANAJEMEN KELAS
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('kelas', KelasController::class);
+
+/*
+|--------------------------------------------------------------------------
+| JADWAL PERKULIAHAN
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('jadwal', JadwalController::class);
+
+/*
+|--------------------------------------------------------------------------
+| KRS (Kartu Rencana Studi)
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('krs', KRSController::class);
+
+/*
+|--------------------------------------------------------------------------
+| ABSENSI MAHASISWA
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('absensi', AbsensiController::class);
+
+/*
+|--------------------------------------------------------------------------
+| KHS (Kartu Hasil Studi)
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('khs', KHSController::class);
+
+/*
+|--------------------------------------------------------------------------
+| HALAMAN UTAMA
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', fn() => redirect('/dashboard'));

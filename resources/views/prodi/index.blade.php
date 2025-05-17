@@ -2,11 +2,10 @@
 
 @section('content')
 <div class="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-red-900 text-white p-6 rounded-r-xl">
-
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Data Kelas</h2>
-        <a href="{{ route('kelas.create') }}" class="bg-red-700 hover:bg-red-800 px-4 py-2 rounded-md text-white font-semibold shadow">
-            + Tambah Kelas
+        <h2 class="text-2xl font-bold">Data Program Studi</h2>
+        <a href="{{ route('prodi.create') }}" class="bg-red-700 hover:bg-red-800 px-4 py-2 rounded-md text-white font-semibold shadow">
+            + Tambah Prodi
         </a>
     </div>
 
@@ -15,22 +14,20 @@
             <thead class="bg-gray-300 text-left">
                 <tr>
                     <th class="px-4 py-2 border">No</th>
-                    <th class="px-4 py-2 border">Kode Kelas</th>
-                    <th class="px-4 py-2 border">Mata Kuliah</th>
-                    <th class="px-4 py-2 border">Semester</th>
+                    <th class="px-4 py-2 border">Nama Prodi</th>
+                    <th class="px-4 py-2 border">Fakultas</th>
                     <th class="px-4 py-2 border text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($kelas as $k)
+                @foreach ($prodis as $prodi)
                 <tr class="@if($loop->even) bg-gray-100 @endif">
                     <td class="px-4 py-2 border text-center">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-2 border">{{ $k->kode_kelas }}</td>
-                    <td class="px-4 py-2 border">{{ $k->mataKuliah->nama_mata_kuliah ?? '-' }}</td>
-                    <td class="px-4 py-2 border">{{ $k->semester }}</td>
+                    <td class="px-4 py-2 border">{{ $prodi->nama }}</td>
+                    <td class="px-4 py-2 border">{{ $prodi->fakultas }}</td>
                     <td class="px-4 py-2 border text-center">
-                        <a href="{{ route('kelas.edit', $k->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                        <form action="{{ route('kelas.destroy', $k->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus kelas ini?')">
+                        <a href="{{ route('prodi.edit', $prodi->id) }}" class="text-blue-600 hover:underline">Edit</a>
+                        <form action="{{ route('prodi.destroy', $prodi->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus data ini?')">
                             @csrf @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline ml-2">Hapus</button>
                         </form>
@@ -40,6 +37,5 @@
             </tbody>
         </table>
     </div>
-
 </div>
 @endsection

@@ -1,28 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-1 bg-gradient-to-r from-gray-900 via-black to-red-900 text-white p-10 min-h-screen rounded-r-xl flex items-center justify-center">
+<div class="min-h-screen bg-gradient-to-r from-gray-900 via-black to-red-900 text-white p-10 flex justify-center items-center">
 
-    <div class="bg-transparent flex flex-col md:flex-row gap-10 w-full max-w-5xl items-center">
-        
-        <!-- Form Section -->
-        <form action="#" method="POST" class="flex-1 space-y-6">
-            @csrf
-            <h2 class="text-3xl font-bold mb-6">Tambah Kelas</h2>
+    <form action="{{ route('kelas.store') }}" method="POST" class="bg-white/20 backdrop-blur-xl text-white p-8 rounded-lg shadow max-w-2xl w-full">
+        @csrf
+        <h2 class="text-2xl font-bold mb-6">Tambah Kelas</h2>
 
-            <input type="text" name="nama_kelas" placeholder="Nama Kelas / Prodi" class="w-full px-6 py-3 rounded-full text-gray-900 placeholder:text-gray-500">
+        <input type="text" name="kode_kelas" placeholder="Kode Kelas" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
 
-            <input type="text" name="dosen_wali" placeholder="Dosen Wali / Pembimbing" class="w-full px-6 py-3 rounded-full text-gray-900 placeholder:text-gray-500">
+        <select name="mata_kuliah_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+            <option value="">-- Pilih Mata Kuliah --</option>
+            @foreach($mataKuliah as $mk)
+                <option value="{{ $mk->id }}">{{ $mk->nama_mata_kuliah }}</option>
+            @endforeach
+        </select>
 
-            <button type="submit" class="bg-red-700 hover:bg-red-800 text-white px-10 py-3 rounded-full font-semibold">
-                Tambahkan
-            </button>
-        </form>
+        <input type="number" name="semester" placeholder="Semester" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
 
-        <!-- Image -->
-        <div class="flex-1">
-            <img src="{{ asset('storage/mahasiswa-group.png') }}" alt="Mahasiswa" class="rounded-xl w-full max-w-md">
-        </div>
-    </div>
+        <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
+            Simpan
+        </button>
+    </form>
+
 </div>
 @endsection
