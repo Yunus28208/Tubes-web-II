@@ -8,15 +8,13 @@
         <h2 class="text-2xl font-bold mb-6">Tambah Kelas</h2>
 
         <input type="text" name="kode_kelas" placeholder="Kode Kelas" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-
-        <select name="mata_kuliah_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-            <option value="">-- Pilih Mata Kuliah --</option>
-            @foreach($mataKuliah as $mk)
-                <option value="{{ $mk->id }}">{{ $mk->nama_mata_kuliah }}</option>
+        <input type="text" name="ruangan" placeholder="Contoh : TI 1" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        <select name="mata_kuliah_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4">
+            <option value="">Pilih Mata Kuliah</option>
+            @foreach($mata_kuliah as $mk)
+                <option value="{{ $mk->id }}">{{ $mk->nama }}</option>
             @endforeach
         </select>
-
-        <input type="number" name="semester" placeholder="Semester" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
 
         <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
             Simpan

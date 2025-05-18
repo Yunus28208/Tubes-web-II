@@ -9,17 +9,16 @@
         <h2 class="text-2xl font-bold mb-6">Edit Kelas</h2>
 
         <input type="text" name="kode_kelas" value="{{ $kelas->kode_kelas }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-
+        <input type="text" name="ruangan" value="{{ $kelas->ruangan }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        
         <select name="mata_kuliah_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
             <option value="">-- Pilih Mata Kuliah --</option>
-            @foreach($mataKuliah as $mk)
-                <option value="{{ $mk->id }}" {{ $kelas->mata_kuliah_id == $mk->id ? 'selected' : '' }}>
-                    {{ $mk->nama_mata_kuliah }}
+            @foreach($mata_kuliah as $mk)
+                <option value="{{ $mk->id }}" {{ old('mata_kuliah_id', $kelas->mata_kuliah_id) == $mk->id ? 'selected' : '' }}>
+                    {{ $mk->nama }}
                 </option>
             @endforeach
         </select>
-
-        <input type="number" name="semester" value="{{ $kelas->semester }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
 
         <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
             Update

@@ -16,7 +16,7 @@ use App\Http\Controllers\UserController;
 
 // Halaman utama
 Route::get('/', function () {
-    return view('dashbooard');
+    return view('dashboard');
 });
 
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');

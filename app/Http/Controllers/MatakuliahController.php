@@ -99,6 +99,8 @@ class MatakuliahController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        return MataKuliah::destroy($id);
+        $matkul = Matakuliah::findOrFail($id);
+        $matkul->delete();
+        return redirect()->route('matakuliah.index');
     }
 }

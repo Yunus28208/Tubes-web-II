@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mata_kuliah', function (Blueprint $table) {
             $table->id();
             $table->string('kode')->unique();
-            $table->string('nama');
+            $table->string('nama')->unique();
             $table->integer('sks');
             $table->enum('semester', ['ganjil', 'genap']);
             $table->string('dosen_pengampu')->nullable();

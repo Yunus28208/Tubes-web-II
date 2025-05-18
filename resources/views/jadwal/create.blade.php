@@ -16,7 +16,6 @@
         <input type="text" name="hari" placeholder="Hari (contoh: Senin)" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="time" name="jam_mulai" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="time" name="jam_selesai" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-        <input type="text" name="ruangan" placeholder="Ruangan" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
 
         <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
             Simpan
