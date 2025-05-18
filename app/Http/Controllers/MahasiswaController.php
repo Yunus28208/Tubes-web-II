@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -13,23 +14,47 @@ class MahasiswaController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return Mahasiswa::with('user', 'prodi')->get();
+        $mahasiswa = Mahasiswa::with('user', 'prodi')->get();
+        return view('mahasiswa.index', compact('mahasiswa'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        $prodis = Prodi::all();
-        $kelas = Kelas::all();
-        return view('mahasiswa.create', compact('prodis', 'kelas'));
+        $prodi = Prodi::all();
+        // $kelas = Kelas::all();
+        $users = User::all();
+        return view('mahasiswa.create', compact('prodi', 'users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        return Mahasiswa::create($request->all());
+        $validated = $request->validate([
+            'username' => 'required|unique:users,username',
+            'nama' => 'required',
+            'nim' => 'required|unique:mahasiswa,nim',
+            'angkatan' => 'required',
+            'prodi_id' => 'required|exists:prodi,id',
+        ]);
+
+        $user = User::create([
+            'username' => $validated['username'],
+            'password' => $validated['username'],
+            'role' => 'mahasiswa',
+        ]);
+
+        Mahasiswa::create([
+            'user_id' => $user->id,
+            'nama' => $validated['nama'],
+            'nim' => $validated['nim'],
+            'angkatan' => $validated['angkatan'],
+            'prodi_id' => $validated['prodi_id'],
+        ]);
+
+        return redirect()->route('mahasiswa.index');
     }
 
     /**
@@ -43,19 +68,40 @@ class MahasiswaController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id){
-        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa = Mahasiswa::with('user', 'prodi')->findOrFail($id);
         $prodis = Prodi::all();
-        $kelas = Kelas::all();
-        return view('mahasiswa.edit', compact('mahasiswa', 'prodis', 'kelas'));
+        // $kelas = Kelas::all();
+        return view('mahasiswa.edit', compact('mahasiswa', 'prodis'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id) {
-        $mhs = Mahasiswa::findOrFail($id);
-        $mhs->update($request->all());
-        return $mhs;
+        $mhs = Mahasiswa::with('user')->findOrFail($id);
+        $request->validate([
+            'username' => 'required|unique:users,username,' . $mhs->user->id . ',id',
+            'nama' => 'required',
+            'nim' => 'required',
+            'angkatan' => 'required',
+            'prodi_id' => 'required|exists:prodi,id',
+        ]);
+
+
+        // Update tabel `users`
+        $mhs->user->update([
+            'username' => $request->username,
+        ]);
+
+        // Update tabel `mahasiswa`
+        $mhs->update([
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'angkatan' => $request->angkatan,
+            'prodi_id' => $request->prodi_id,
+        ]);
+
+        return redirect()->route('mahasiswa.index');
     }
 
     /**

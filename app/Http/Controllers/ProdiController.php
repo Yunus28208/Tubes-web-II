@@ -11,7 +11,8 @@ class ProdiController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return Prodi::all();
+        $prodi = Prodi::all();
+        return view('prodi.index', compact('prodi'));
     }
 
     /**
@@ -25,7 +26,9 @@ class ProdiController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        return Prodi::create($request->all());
+        Prodi::create($request->all());
+        $prodi = Prodi::all();
+        return view('prodi.index', compact('prodi'));
     }
 
     /**
@@ -56,6 +59,8 @@ class ProdiController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        return Prodi::destroy($id);
+        $prodi = Prodi::findOrFail($id);
+        $prodi->delete();
+        return redirect()->route('prodi.index');
     }
 }

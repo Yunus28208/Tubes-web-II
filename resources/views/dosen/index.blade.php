@@ -17,7 +17,7 @@
                     <th class="px-4 py-2 border">Nama</th>
                     <th class="px-4 py-2 border">NIP</th>
                     <th class="px-4 py-2 border">Bidang Keahlian</th>
-                    <th class="px-4 py-2 border">User Akun</th>
+                    <th class="px-4 py-2 border">Username</th>
                     <th class="px-4 py-2 border text-center">Aksi</th>
                 </tr>
             </thead>
@@ -28,7 +28,7 @@
                     <td class="px-4 py-2 border">{{ $d->nama }}</td>
                     <td class="px-4 py-2 border">{{ $d->nip }}</td>
                     <td class="px-4 py-2 border">{{ $d->bidang_keahlian }}</td>
-                    <td class="px-4 py-2 border">{{ $d->user->name ?? '-' }}</td>
+                    <td class="px-4 py-2 border">{{ $d->user->username ?? '-' }}</td>
                     <td class="px-4 py-2 border text-center">
                         <a href="{{ route('dosen.edit', $d->id) }}" class="text-blue-600 hover:underline">Edit</a>
                         <form action="{{ route('dosen.destroy', $d->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus?')">

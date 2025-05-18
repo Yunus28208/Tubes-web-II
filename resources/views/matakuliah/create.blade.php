@@ -9,14 +9,41 @@
         <input type="text" name="kode" placeholder="Kode MK" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="text" name="nama" placeholder="Nama Mata Kuliah" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="number" name="sks" placeholder="Jumlah SKS" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-        <input type="number" name="semester" placeholder="Semester" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        <select name="semester" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+            <option value="">Pilih Semester</option>
+            <option value="ganjil">Ganjil</option>
+            <option value="genap">Genap</option>
+        </select>
+        <label class="block mb-2 font-semibold">Dosen Pengampu 1</label>
+        <select name="dosen_pengampu_1" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4">
+            <option value="">Pilih Dosen</option>
+            @foreach($dosens as $dosen)
+                <option value="{{ $dosen->nama }}">{{ $dosen->nama }}</option>
+            @endforeach
+        </select>
 
-        <label class="block mb-2 font-semibold">Dosen Pengampu</label>
-        <select name="dosen_ids[]" multiple class="w-full px-4 py-2 rounded bg-red-800 text-white mb-4">
+        <label class="block mb-2 font-semibold">Dosen Pengampu 2</label>
+        <select name="dosen_pengampu_2" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4">
+            <option value="">Pilih Dosen</option>
+            @foreach($dosens as $dosen)
+                <option value="{{ $dosen->nama }}">{{ $dosen->nama }}</option>
+            @endforeach
+        </select>
+
+        <label class="block mb-2 font-semibold">Dosen Pengampu 3</label>
+        <select name="dosen_pengampu_3" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4">
+            <option value="">Pilih Dosen</option>
+            @foreach($dosens as $dosen)
+                <option value="{{ $dosen->nama }}">{{ $dosen->nama }}</option>
+            @endforeach
+        </select>
+
+        <!-- <label class="block mb-2 font-semibold">Dosen Pengampu</label>
+        <select name="dosen_pengampu" multiple class="w-full px-4 py-2 rounded bg-red-800 text-white mb-4">
             @foreach($dosens as $d)
                 <option value="{{ $d->id }}">{{ $d->nama }}</option>
             @endforeach
-        </select>
+        </select> -->
 
         <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
             Simpan

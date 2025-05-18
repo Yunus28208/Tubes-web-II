@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('kode')->unique();
             $table->string('nama');
             $table->integer('sks');
-            $table->string('semester');
+            $table->enum('semester', ['ganjil', 'genap']);
+            $table->string('dosen_pengampu')->nullable();
             $table->timestamps();
         });
     }

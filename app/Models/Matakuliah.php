@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MataKuliah extends Model
 {
-    protected $fillable = ['kode', 'nama', 'sks', 'semester'];
-
+    protected $table = 'mata_kuliah'; 
+    protected $fillable = ['kode', 'nama', 'sks', 'semester', 'dosen_pengampu'];
     public function dosens() {
         return $this->belongsToMany(Dosen::class, 'dosen_mata_kuliah');
     }

@@ -7,19 +7,27 @@
         @method('PUT')
         <h2 class="text-2xl font-bold mb-6">Edit Mata Kuliah</h2>
 
-        <input type="text" name="kode" value="{{ $matakuliah->kode }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-        <input type="text" name="nama" value="{{ $matakuliah->nama }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-        <input type="number" name="sks" value="{{ $matakuliah->sks }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-        <input type="number" name="semester" value="{{ $matakuliah->semester }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-
-        <label class="block mb-2 font-semibold">Dosen Pengampu</label>
-        <select name="dosen_ids[]" multiple class="w-full px-4 py-2 rounded bg-red-800 text-white mb-4">
-            @foreach($dosens as $d)
-                <option value="{{ $d->id }}" @if(in_array($d->id, $matakuliah->dosens->pluck('id')->toArray())) selected @endif>
-                    {{ $d->nama }}
-                </option>
-            @endforeach
+        <input type="text" name="kode" value="{{ old('kode',$matakuliah->kode) }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        <input type="text" name="nama" value="{{ old('nama',$matakuliah->nama) }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        <input type="number" name="sks" value="{{ old('sks',$matakuliah->sks )}}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        <select name="semester" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+            <option value="">Pilih Semester</option>
+            <option value="ganjil" {{ old('semester', $matakuliah->semester ?? '') == 'ganjil' ? 'selected' : '' }}>Ganjil</option>
+            <option value="genap" {{ old('semester', $matakuliah->semester ?? '') == 'genap' ? 'selected' : '' }}>Genap</option>
         </select>
+
+        @foreach(range(1, 3) as $i)
+            <label class="block mb-2 font-semibold">Dosen Pengampu {{ $i }}</label>
+            <select name="dosen_pengampu_{{ $i }}" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4">
+                <option value="">Pilih Dosen</option>
+                @foreach($dosens as $dosen)
+                    <option value="{{ $dosen->nama }}" 
+                        {{ old("dosen_pengampu_$i", $dosen_pengampu[$i - 1] ?? '') == $dosen->nama ? 'selected' : '' }}>
+                        {{ $dosen->nama }}
+                    </option>
+                @endforeach
+            </select>
+        @endforeach
 
         <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
             Update

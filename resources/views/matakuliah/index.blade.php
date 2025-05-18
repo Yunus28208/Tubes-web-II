@@ -23,20 +23,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($matakuliah as $m)
+                @foreach ($mata_kuliah as $mk)
                 <tr class="@if($loop->even) bg-gray-100 @endif">
                     <td class="px-4 py-2 border text-center">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-2 border">{{ $m->kode }}</td>
-                    <td class="px-4 py-2 border">{{ $m->nama }}</td>
-                    <td class="px-4 py-2 border">{{ $m->sks }}</td>
-                    <td class="px-4 py-2 border">{{ $m->semester }}</td>
-                    <td class="px-4 py-2 border">
-                        {{ $m->dosens->pluck('nama')->join(', ') }}
-                    </td>
+                    <td class="px-4 py-2 border">{{ $mk->kode }}</td>
+                    <td class="px-4 py-2 border">{{ $mk->nama }}</td>
+                    <td class="px-4 py-2 border">{{ $mk->sks }}</td>
+                    <td class="px-4 py-2 border">{{ $mk->semester }}</td>
+                    <td class="px-4 py-2 border">{{ $mk->dosen_pengampu }}</td>
+                    
                     <td class="px-4 py-2 border text-center">
-                        <a href="{{ route('matakuliah.edit', $m->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                        <form action="{{ route('matakuliah.destroy', $m->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus?')">
-                            @csrf @method('DELETE')
+                        <a href="{{ route('matakuliah.edit', $mk->id) }}" class="text-blue-600 hover:underline">Edit</a>
+                        <form action="{{ route('matakuliah.destroy', $mk->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus?')">
+                            @csrf 
+                            @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline ml-2">Hapus</button>
                         </form>
                     </td>

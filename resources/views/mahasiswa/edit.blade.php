@@ -1,34 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-r from-gray-900 via-black to-red-900 text-white p-10 flex justify-center items-center">
-
-    <form action="{{ route('mahasiswa.store') }}" method="POST" class="bg-white/20 backdrop-blur-xl text-white p-8 rounded-lg shadow max-w-2xl w-full">
+    <div>
+        <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="POST"
+        class="flex flex-col gap-4 px-6 py-4 bg-white border border-zinc-300 shadow col-span-3 md:col-span-2">
         @csrf
-        <h2 class="text-2xl font-bold mb-6">Edit Mahasiswa</h2>
+        @method("PUT")
+        
+        <div class="grid sm:grid-cols-2 gap-4">
 
-        <select name="user_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-            <option value="">-- Pilih User --</option>
-            @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
-            @endforeach
-        </select>
+            <div class="flex flex-col gap-2 text-black">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"
+                    class="px-3 py-2 border border-zinc-300 bg-slate-50"
+                    placeholder="Username" value="{{ old('username', $mahasiswa->user->username)  }}">
+                @error('username')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <input type="text" name="nama" placeholder="Nama Mahasiswa" class="w-full px-5 py-3 rounded-full bg-red-800 text-white placeholder-white mb-4" required>
-        <input type="text" name="nim" placeholder="NIM" class="w-full px-5 py-3 rounded-full bg-red-800 text-white placeholder-white mb-4" required>
-        <input type="text" name="angkatan" placeholder="Angkatan" class="w-full px-5 py-3 rounded-full bg-red-800 text-white placeholder-white mb-4" required>
+            <div class="flex flex-col gap-2 text-black">
+                <label for="nama">Nama Mahasiswa</label>
+                <input type="text" id="nama" name="nama"
+                    class="px-3 py-2 border border-zinc-300 bg-slate-50"
+                    placeholder="Nama Mahasiswa" value="{{ old('nama', $mahasiswa->nama) }}">
+                @error('nama')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
 
-        <select name="prodi_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
-            <option value="">-- Pilih Prodi --</option>
-            @foreach($prodis as $p)
-                <option value="{{ $p->id }}">{{ $p->nama_prodi }}</option>
-            @endforeach
-        </select>
+        <div class="grid sm:grid-cols-2 gap-4 text-black">
+            <div class="flex flex-col gap-2">
+                <label for="nim">NIM</label>
+                <input type="text" id="nim" name="nim"
+                    class="px-3 py-2 border border-zinc-300 bg-slate-50"
+                    placeholder="NIM" value="{{ old('nim', $mahasiswa->nim) }}">
+                @error('nim')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <button type="submit" class="bg-white text-red-800 font-bold px-8 py-2 rounded-full hover:bg-red-100">
-            Simpan
-        </button>
-    </form>
+            <div class="flex flex-col gap-2 text-black">
+                <label for="angkatan">Angkatan</label>
+                <input type="text" id="angkatan" name="angkatan"
+                    class="px-3 py-2 border border-zinc-300 bg-slate-50"
+                    placeholder="Angkatan" value="{{ old('angkatan', $mahasiswa->angkatan) }}">
+                @error('angkatan')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
 
-</div>
+        <div class="flex flex-col gap-2 text-black">
+            <label for="prodi_id">Program Studi</label>
+            <select name="prodi_id" id="prodi_id"
+                class="px-3 py-2 border border-zinc-300 appearance-none bg-slate-50">
+                <option value="" disabled {{ old('prodi_id', $mahasiswa->prodi_id) == '' ? 'selected' : '' }}>-- Pilih Prodi --</option>
+                @foreach($prodis as $p)
+                    <option value="{{ $p->id }}" {{ old('prodi_id', $mahasiswa->prodi_id) == $p->id ? 'selected' : '' }}>
+                        {{ $p->nama }}
+                    </option>
+                @endforeach
+            </select>
+            @error('prodi_id')
+                <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="self-end flex gap-2">
+            <a href="{{ route('mahasiswa.index') }}"
+               class="bg-slate-50 border border-slate-500 text-slate-500 px-3 py-2 cursor-pointer">
+                <span>Cancel</span>
+            </a>
+            <button type="submit"
+                class="bg-blue-50 border border-blue-500 text-blue-500 px-3 py-2 flex items-center gap-2 cursor-pointer">
+                <i class="ph ph-floppy-disk block text-blue-500"></i>
+                <span>Simpan</span>
+            </button>
+        </div>
+
+        </form>
+    </div>
 @endsection

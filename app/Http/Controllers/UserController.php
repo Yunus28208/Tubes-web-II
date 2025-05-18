@@ -26,12 +26,20 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        $user = User::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role' => $request->role
-        ]);
-        return response()->json($user);
+        $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6',
+        'role' => 'required|in:admin,dosen,mahasiswa'
+    ]);
+
+    User::create([
+        'name' => $request->first_name . ' ' . $request->last_name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role
+    ]);
     }
 
     /**
