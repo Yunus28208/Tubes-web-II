@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dosen;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -11,21 +12,43 @@ class DosenController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return Dosen::with('user')->get();
+        $dosen = Dosen::with('user')->get();
+        return view('dosen.index', compact('dosen'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        return view('dosen.create');
+        $users = User::all();
+        return view('dosen.create', compact('users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        return Dosen::create($request->all());
+        $validated = $request->validate([
+            'username' => 'required|unique:users,username',
+            'nama' => 'required',
+            'nip' => 'required|unique:dosen,nip',
+            'bidang_keahlian' => 'required',
+        ]);
+
+        $user = User::create([
+            'username' => $validated['username'],
+            'password' => $validated['username'],
+            'role' => 'dosen',
+        ]);
+
+        Dosen::create([
+            'user_id' => $user->id,
+            'nama' => $validated['nama'],
+            'nip' => $validated['nip'],
+            'bidang_keahlian' => $validated['bidang_keahlian'],
+        ]); 
+
+        return redirect()->route('dosen.index');
     }
 
     /**
@@ -47,9 +70,29 @@ class DosenController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id) {
-        $dosen = Dosen::findOrFail($id);
-        $dosen->update($request->all());
-        return $dosen;
+        $dosen = Dosen::with('user')->findOrFail($id);
+
+        $request->validate([
+            'username' => 'required|unique:users,username,'. $dosen->user->id . ',id',
+            'nama' => 'required',
+            'nip' => 'required',
+            'bidang_keahlian' => 'required',
+        ]);
+
+
+        // Update tabel `users`
+        $dosen->user->update([
+            'username' => $request->username,
+        ]);
+
+        // Update tabel `mahasiswa`
+        $dosen->update([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'bidang_keahlian' => $request->bidang_keahlian,
+        ]);
+
+        return redirect()->route('dosen.index');
     }
 
     /**

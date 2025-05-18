@@ -20,19 +20,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($prodis as $prodi)
-                <tr class="@if($loop->even) bg-gray-100 @endif">
-                    <td class="px-4 py-2 border text-center">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-2 border">{{ $prodi->nama }}</td>
-                    <td class="px-4 py-2 border">{{ $prodi->fakultas }}</td>
+                @foreach ($prodi as $prodis)
+                    <tr class="@if($loop->even) bg-gray-100 @endif">
+                        <td class="px-4 py-2 border text-center">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-2 border">{{ $prodis->nama }}</td>
+                    <td class="px-4 py-2 border">{{ $prodis->fakultas }}</td>
                     <td class="px-4 py-2 border text-center">
-                        <a href="{{ route('prodi.edit', $prodi->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                        <form action="{{ route('prodi.destroy', $prodi->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus data ini?')">
+                        <a href="{{ route('prodi.edit', $prodis->id) }}" class="text-blue-600 hover:underline">Edit</a>
+                        <form action="{{ route('prodi.destroy', $prodis->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus data ini?')">
                             @csrf @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline ml-2">Hapus</button>
                         </form>
                     </td>
-                </tr>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

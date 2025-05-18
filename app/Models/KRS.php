@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KRS extends Model
 {
+    protected $table = 'krs'; 
     protected $fillable = ['mahasiswa_id', 'kelas_id', 'tahun_ajaran', 'semester'];
 
     public function mahasiswa() {

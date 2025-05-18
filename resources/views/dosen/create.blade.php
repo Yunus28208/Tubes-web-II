@@ -6,13 +6,14 @@
         @csrf
         <h2 class="text-2xl font-bold mb-6">Tambah Dosen</h2>
 
-        <select name="user_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
+        <!-- <select name="user_id" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
             <option value="">-- Pilih User --</option>
             @foreach($users as $u)
                 <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }})</option>
             @endforeach
-        </select>
+        </select> -->
 
+        <input type="text" name="username" placeholder="Username" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="text" name="nama" placeholder="Nama Dosen" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="text" name="nip" placeholder="NIP" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>
         <input type="text" name="bidang_keahlian" placeholder="Bidang Keahlian" class="w-full px-5 py-3 rounded-full bg-red-800 text-white mb-4" required>

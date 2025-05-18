@@ -21,7 +21,7 @@
         <div class="w-full md:w-1/2">
             <h2 class="text-white text-lg font-semibold mb-4">Login</h2>
 
-            <form action="#" method="POST" class="space-y-4">
+            <form action="dashboard" method="POST" class="space-y-4">
                 @csrf
 
                 <input type="email" name="email" placeholder="Enter Email" class="w-full px-4 py-2 rounded-md bg-red-800 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-red-400" required>
@@ -29,12 +29,13 @@
                 <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 rounded-md bg-red-800 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-red-400" required>
 
                 <div>
-                    <label for="fokus" class="text-white text-sm">Kefokusan :</label>
-                    <select name="fokus" id="fokus" class="w-full mt-1 px-4 py-2 rounded-md bg-red-800 text-white focus:outline-none">
-                        <option value="">--Silahkan pilih--</option>
-                        <option value="rpl">Rekayasa Perangkat Lunak</option>
-                        <option value="sc">Sistem Cerdas</option>
-                    </select>
+                    <label for="fokus" class="text-white text-sm">Role : </label>
+                    <select name="role" class="w-full bg-red-800 text-white px-4 py-3 rounded-lg focus:outline-none">
+                    <option value="">-- Pilih Role --</option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role }}">{{ ucfirst($role) }}</option>
+                    @endforeach
+                </select>
                 </div>
 
                 <button type="submit" class="w-full py-2 bg-white text-red-800 font-semibold rounded-md hover:bg-red-100 transition">Sign In</button>

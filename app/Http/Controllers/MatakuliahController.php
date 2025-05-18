@@ -12,7 +12,8 @@ class MatakuliahController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return MataKuliah::with('dosens')->get();
+        $mata_kuliah = MataKuliah::all();
+        return view('matakuliah.index', compact('mata_kuliah'));
     }
 
     /**
@@ -27,11 +28,26 @@ class MatakuliahController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        $matkul = MataKuliah::create($request->all());
-        if ($request->has('dosen_ids')) {
-            $matkul->dosens()->attach($request->dosen_ids);
-        }
-        return $matkul;
+        $validated = $request->validate([
+        'kode' => 'required|unique:mata_kuliah',
+        'nama' => 'required',
+        'sks' => 'required|integer',
+        'semester' => 'required|in:ganjil,genap',
+        'dosen_pengampu_1' => 'nullable|string',
+        'dosen_pengampu_2' => 'nullable|string',
+        'dosen_pengampu_3' => 'nullable|string',
+    ]);
+
+        // Gabungkan ketiga dosen menjadi satu string
+        $dosenPengampu = collect([$request->dosen_pengampu_1, $request->dosen_pengampu_2, $request->dosen_pengampu_3])
+            ->filter()
+            ->implode(', ');
+
+        $validated['dosen_pengampu'] = $dosenPengampu;
+
+        MataKuliah::create($validated);
+
+        return redirect()->route('matakuliah.index');
     }
 
     /**
@@ -47,7 +63,8 @@ class MatakuliahController extends Controller
     public function edit($id){
         $matakuliah = MataKuliah::findOrFail($id);
         $dosens = Dosen::all();
-        return view('matakuliah.edit', compact('matakuliah', 'dosens'));
+        $dosen_pengampu = explode(', ', $matakuliah->dosen_pengampu);
+        return view('matakuliah.edit', compact('matakuliah', 'dosens', 'dosen_pengampu'));
     }
 
     /**
@@ -55,11 +72,27 @@ class MatakuliahController extends Controller
      */
     public function update(Request $request, $id) {
         $matkul = MataKuliah::findOrFail($id);
-        $matkul->update($request->all());
-        if ($request->has('dosen_ids')) {
-            $matkul->dosens()->sync($request->dosen_ids);
-        }
-        return $matkul;
+
+    $validated = $request->validate([
+        'kode' => 'required|unique:mata_kuliah,kode,' . $id,
+        'nama' => 'required',
+        'sks' => 'required|integer',
+        'semester' => 'required|in:ganjil,genap',
+        'dosen_pengampu_1' => 'nullable|string',
+        'dosen_pengampu_2' => 'nullable|string',
+        'dosen_pengampu_3' => 'nullable|string',
+    ]);
+
+        // Gabungkan ketiga dosen menjadi satu string
+        $dosenPengampu = collect([$request->dosen_pengampu_1, $request->dosen_pengampu_2, $request->dosen_pengampu_3])
+            ->filter()
+            ->implode(', ');
+
+        $validated['dosen_pengampu'] = $dosenPengampu;
+
+        $matkul->update($validated);
+
+        return redirect()->route('matakuliah.index');
     }
 
     /**
