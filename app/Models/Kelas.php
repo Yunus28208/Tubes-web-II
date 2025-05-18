@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Kelas extends Model
 {
     protected $table = 'kelas'; 
-    protected $fillable = ['kode_kelas', 'mata_kuliah_id', 'semester'];
+    protected $fillable = ['kode_kelas', 'ruangan', 'mata_kuliah_id'];
 
-    public function mataKuliah() {
+    public function mata_kuliah() {
         return $this->belongsTo(MataKuliah::class);
     }
 

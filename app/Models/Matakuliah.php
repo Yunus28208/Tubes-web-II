@@ -9,7 +9,7 @@ class MataKuliah extends Model
     protected $table = 'mata_kuliah'; 
     protected $fillable = ['kode', 'nama', 'sks', 'semester', 'dosen_pengampu'];
     public function dosens() {
-        return $this->belongsToMany(Dosen::class, 'dosen_mata_kuliah');
+        return $this->hasMany(Dosen::class, 'mata_kuliah_id');
     }
 
     public function kelas() {

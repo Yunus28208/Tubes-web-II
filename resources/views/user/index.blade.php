@@ -15,6 +15,7 @@
                 <tr>
                     <th class="px-4 py-2 border">No</th>
                     <th class="px-4 py-2 border">Username</th>
+                    <th class="px-4 py-2 border">Nama</th>
                     <th class="px-4 py-2 border">Role</th>
                     <th class="px-4 py-2 border text-center">Aksi</th>
                 </tr>
@@ -23,7 +24,18 @@
                 @foreach ($users as $u)
                 <tr class="@if($loop->even) bg-gray-100 @endif">
                     <td class="px-4 py-2 border text-center">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-2 border">{{ $u->name }}</td>
+                    <td class="px-4 py-2 border">{{ $u->username }}</td>
+                    <td class="px-4 py-2 border">
+                        <div>
+                            @if ($u->role == 'mahasiswa' && $u->mahasiswa)
+                                {{ $u->mahasiswa->nama }}
+                            @elseif ($u->role == 'dosen' && $u->dosen)
+                                {{ $u->dosen->nama }}
+                            @else
+                                Nama tidak ditemukan
+                            @endif
+                        </div>
+                    </td>
                     <td class="px-4 py-2 border">{{ $u->role }}</td>
                     <td class="px-4 py-2 border text-center">
                         <a href="{{ route('user.edit', $u->id) }}" class="text-blue-600 hover:underline">Edit</a>

@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
             $table->string('kode_kelas');
+            $table->string('ruangan');
             $table->foreignId('mata_kuliah_id')->constrained('mata_kuliah')->onDelete('cascade');
-            $table->foreignId('dosen_id')->constrained('dosen')->onDelete('cascade');
-            $table->string('semester');
             $table->timestamps();
         });
     }

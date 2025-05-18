@@ -12,7 +12,8 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return User::all();
+        $users = User::with('dosen', 'mahasiswa')->get();
+        return view('user.index', compact('users'));
     }
 
     /**

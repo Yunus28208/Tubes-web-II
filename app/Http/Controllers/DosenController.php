@@ -99,6 +99,8 @@ class DosenController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        return Dosen::destroy($id);
+        $dosen = Dosen::findOrFail($id);
+        $dosen->delete();
+        return redirect()->route('dosen.index');
     }
 }

@@ -70,7 +70,7 @@
 
         <div class="self-end flex gap-2">
             <a href="{{ route('mahasiswa.index') }}"
-               class="bg-slate-50 border border-slate-500 text-slate-500 px-3 py-2 cursor-pointer">
+                class="bg-slate-50 border border-slate-500 text-slate-500 px-3 py-2 cursor-pointer">
                 <span>Cancel</span>
             </a>
             <button type="submit"
