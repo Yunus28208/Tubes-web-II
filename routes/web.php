@@ -15,10 +15,11 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\UserController;
 
 // Halaman utama
-Route::get('/', function () {
-    return view('dashboard');
-});
+// Route::get('/', function () {
+//     return view('auth.register');
+// });
 
+Route::get('/',[AuthController::class, 'register'])->name('register');
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/register', [AuthController::class, 'register'])->name('auth.register');

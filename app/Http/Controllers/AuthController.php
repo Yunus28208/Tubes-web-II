@@ -27,10 +27,10 @@ class AuthController extends Controller
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => $request['password'],
-            'role' => $request['role'],
+            // 'role' => $request['role'],
         ]);
 
-        return redirect()->route('auth.login')->with('success', 'Register Success');
+        return redirect()->route('auth.login');
     }
 
     public function authenticate(Request $request)

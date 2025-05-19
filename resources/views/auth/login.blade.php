@@ -21,7 +21,7 @@
         <div class="w-full md:w-1/2">
             <h2 class="text-white text-lg font-semibold mb-4">Login</h2>
 
-            <form action="dashboard" method="POST" class="space-y-4">
+            <form action="{{route('auth.authenticate')}}" method="POST" class="space-y-4">
                 @csrf
 
                 <input type="email" name="email" placeholder="Enter Email" class="w-full px-4 py-2 rounded-md bg-red-800 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-red-400" required>
