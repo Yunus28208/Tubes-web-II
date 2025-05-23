@@ -12,5 +12,8 @@ class Jadwal extends Model
     public function kelas() {
         return $this->belongsTo(Kelas::class);
     }
+    public function krs() {
+        return $this->hasMany(KRS::class);
+    }
 }
 

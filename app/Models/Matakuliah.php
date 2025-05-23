@@ -11,6 +11,9 @@ class MataKuliah extends Model
     public function dosens() {
         return $this->hasMany(Dosen::class, 'mata_kuliah_id');
     }
+    public function krs() {
+        return $this->hasMany(KRS::class);
+    }
 
     public function kelas() {
         return $this->hasMany(Kelas::class);

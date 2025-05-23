@@ -15,45 +15,39 @@
             <div class="p-6">
                 <h1 class="text-2xl font-extrabold text-center text-red-800 mb-10">SIAKAD</h1>
                 <nav class="space-y-3 text-sm font-semibold">
-                    <a href="/dashboard" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('dashboard')) bg-red-800 text-white @endif">
+                    <a href="{{route("admin.dashboard")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('dashboard')) bg-red-800 text-white @endif">
                         🏠 Dashboard
                     </a>
-                    <a href="/mahasiswa" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('mahasiswa*')) bg-red-800 text-white @endif">
+                    <a href="{{route('mahasiswa.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('mahasiswa*')) bg-red-800 text-white @endif">
                         👨‍🎓 Mahasiswa
                     </a>
-                    <a href="/dosen" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('dosen*')) bg-red-800 text-white @endif">
+                    <a href="{{route('dosen.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('dosen*')) bg-red-800 text-white @endif">
                         👨‍🏫 Dosen
                     </a>
-                    <a href="/prodi" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('prodi*')) bg-red-800 text-white @endif">
+                    <a href="{{route('prodi.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('prodi*')) bg-red-800 text-white @endif">
                         🏷️ Prodi
                     </a>
-                    <a href="/matakuliah" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('matakuliah*')) bg-red-800 text-white @endif">
+                    <a href="{{route('matakuliah.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('matakuliah*')) bg-red-800 text-white @endif">
                         📚 Mata Kuliah
                     </a>
-                    <a href="/kelas" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('kelas*')) bg-red-800 text-white @endif">
+                    <a href="{{route('kelas.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('kelas*')) bg-red-800 text-white @endif">
                         🏫 Kelas
                     </a>
-                    <a href="/jadwal" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('jadwal*')) bg-red-800 text-white @endif">
+                    <a href="{{route('jadwal.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('jadwal*')) bg-red-800 text-white @endif">
                         📆 Jadwal
                     </a>
-                    <a href="/krs" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('krs*')) bg-red-800 text-white @endif">
+                    <a href="{{route("krs.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('krs*')) bg-red-800 text-white @endif">
                         📝 KRS
                     </a>
-                    <a href="/absensi" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('absensi*')) bg-red-800 text-white @endif">
-                        ✅ Absensi
-                    </a>
-                    <a href="/khs" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('khs*')) bg-red-800 text-white @endif">
+                    <a href="{{route(name: 'khs.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('khs*')) bg-red-800 text-white @endif">
                         🧾 KHS
                     </a>
-                    <a href="/user" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('user*')) bg-red-800 text-white @endif">
+                    <a href="{{route('profile.admin.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('profile*')) bg-red-800 text-white @endif">
+                        🔐 Profile
+                    </a>
+                    <a href="{{route('user.index')}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('user*')) bg-red-800 text-white @endif">
                         🔐 User
                     </a>
-                    <form method="POST" action="/logout">
-                        @csrf
-                        <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 mt-4 text-left text-red-700 hover:text-red-900">
-                            🚪 Logout
-                        </button>
-                    </form>
                 </nav>
             </div>
         </aside>

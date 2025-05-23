@@ -12,14 +12,14 @@ class ProdiController extends Controller
      */
     public function index() {
         $prodi = Prodi::all();
-        return view('prodi.index', compact('prodi'));
+        return view('admin.prodi.index', compact('prodi'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        return view('prodi.create');
+        return view('admin.prodi.create');
     }
 
     /**
@@ -28,7 +28,7 @@ class ProdiController extends Controller
     public function store(Request $request) {
         Prodi::create($request->all());
         $prodi = Prodi::all();
-        return view('prodi.index', compact('prodi'));
+        return redirect()->route('prodi.index');
     }
 
     /**
@@ -43,7 +43,7 @@ class ProdiController extends Controller
      */
     public function edit($id){
         $prodi = Prodi::findOrFail($id);
-        return view('prodi.edit', compact('prodi'));
+        return view('admin.prodi.edit', compact('prodi'));
     }
 
     /**
@@ -52,7 +52,7 @@ class ProdiController extends Controller
     public function update(Request $request, $id) {
         $prodi = Prodi::findOrFail($id);
         $prodi->update($request->all());
-        return $prodi;
+        return redirect()->route('prodi.index');
     }
 
     /**

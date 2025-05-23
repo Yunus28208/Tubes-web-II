@@ -15,7 +15,7 @@ class MahasiswaController extends Controller
      */
     public function index() {
         $mahasiswa = Mahasiswa::with('user', 'prodi')->get();
-        return view('mahasiswa.index', compact('mahasiswa'));
+        return view('admin.mahasiswa.index', compact('mahasiswa'));
     }
 
     /**
@@ -25,7 +25,7 @@ class MahasiswaController extends Controller
         $prodi = Prodi::all();
         // $kelas = Kelas::all();
         $users = User::all();
-        return view('mahasiswa.create', compact('prodi', 'users'));
+        return view('admin.mahasiswa.create', compact('prodi', 'users'));
     }
 
     /**
@@ -71,7 +71,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::with('user', 'prodi')->findOrFail($id);
         $prodis = Prodi::all();
         // $kelas = Kelas::all();
-        return view('mahasiswa.edit', compact('mahasiswa', 'prodis'));
+        return view('admin.mahasiswa.edit', compact('mahasiswa', 'prodis'));
     }
 
     /**

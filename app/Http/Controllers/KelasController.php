@@ -13,7 +13,7 @@ class KelasController extends Controller
      */
     public function index() {
         $kelas = Kelas::with('mata_kuliah')->get();
-        return view('kelas.index', compact('kelas'));
+        return view('admin.kelas.index', compact('kelas'));
     }
 
     /**
@@ -21,7 +21,7 @@ class KelasController extends Controller
      */
     public function create(){
         $mata_kuliah = MataKuliah::all();
-        return view('kelas.create', compact('mata_kuliah'));
+        return view('admin.kelas.create', compact('mata_kuliah'));
     }
 
     /**
@@ -61,7 +61,7 @@ class KelasController extends Controller
     public function edit($id){
         $kelas = Kelas::findOrFail($id);
         $mata_kuliah = MataKuliah::all();
-        return view('kelas.edit', compact('kelas', 'mata_kuliah'));
+        return view('admin.kelas.edit', compact('kelas', 'mata_kuliah'));
     }
 
     /**

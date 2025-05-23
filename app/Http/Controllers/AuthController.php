@@ -36,19 +36,28 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required',
         ]);
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $user = Auth::user();
 
-            return redirect()->intended('dashboard');
+            if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'mahasiswa') {
+                return redirect()->route('mahasiswa.dashboard');
+            }elseif ($user->role === 'dosen') {
+                return redirect()->route('dosen.dashboard');
+            } else {
+                auth()->logout();
+                return redirect()->route('auth.login')->with('error', 'Role tidak dikenal');
+            }
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            'username' => 'The provided credentials do not match our records.',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)

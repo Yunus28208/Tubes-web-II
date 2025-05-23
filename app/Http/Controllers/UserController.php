@@ -13,14 +13,14 @@ class UserController extends Controller
      */
     public function index() {
         $users = User::with('dosen', 'mahasiswa')->get();
-        return view('user.index', compact('users'));
+        return view('admin.user.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        return view('user.create');
+        return view('admin.user.create');
     }
 
     /**
@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function edit($id){
         $user = User::findOrFail($id);
-        return view('user.edit', compact('user'));
+        return view('admin.user.edit', compact('user'));
     }
 
     /**

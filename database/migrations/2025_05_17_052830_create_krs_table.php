@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('krs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mahasiswa_id')->constrained('mahasiswa')->onDelete('cascade');
-            $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
+            $table->foreignId('jadwal_id')->constrained('jadwal')->onDelete('cascade');
             $table->string('tahun_ajaran');
             $table->string('semester');
             $table->timestamps();

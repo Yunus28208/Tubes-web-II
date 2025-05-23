@@ -13,7 +13,7 @@ class DosenController extends Controller
      */
     public function index() {
         $dosen = Dosen::with('user')->get();
-        return view('dosen.index', compact('dosen'));
+        return view('admin.dosen.index', compact('dosen'));
     }
 
     /**
@@ -21,7 +21,7 @@ class DosenController extends Controller
      */
     public function create(){
         $users = User::all();
-        return view('dosen.create', compact('users'));
+        return view('admin.dosen.create', compact('users'));
     }
 
     /**
@@ -63,7 +63,7 @@ class DosenController extends Controller
      */
     public function edit($id){
         $dosen = Dosen::findOrFail($id);
-        return view('dosen.edit', compact('dosen'));
+        return view('admin.dosen.edit', compact('dosen'));
     }
 
     /**
