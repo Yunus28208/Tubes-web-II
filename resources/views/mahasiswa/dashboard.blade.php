@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.mahasiswa')
 
 @section('content')
 <div class="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-red-900 text-white p-10 flex flex-col justify-between rounded-r-xl">
 
     <!-- Header -->
     <div>
-        <h1 class="text-3xl font-bold mb-2">Selamat Datang, [ <span class="text-white font-bold">Yunus</span> ]</h1>
+        <h1 class="text-3xl font-bold mb-2">Selamat Datang, [ <span class="text-white font-bold">{{$user->username}}</span> ]</h1>
         <p class="text-sm text-gray-300 mb-6">Tahun ajaran 2025/2026</p>
 
         <div class="flex flex-wrap gap-4 mb-6">

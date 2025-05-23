@@ -30,12 +30,12 @@
                 <input type="password" name="password" placeholder="Password"
                     class="w-full bg-red-800 text-white placeholder-white px-4 py-3 rounded-lg focus:outline-none">                
 
-                <select name="role" class="w-full bg-red-800 text-white px-4 py-3 rounded-lg focus:outline-none">
+                <!-- <select name="role" class="w-full bg-red-800 text-white px-4 py-3 rounded-lg focus:outline-none">
                     <option value="">-- Pilih Role --</option>
                     @foreach($roles as $role)
                         <option value="{{ $role }}">{{ ucfirst($role) }}</option>
                     @endforeach
-                </select>
+                </select> -->
 
                 <button type="submit"
                     class="bg-white text-red-700 px-6 py-2 rounded-md font-semibold hover:bg-red-100">Sign up</button>

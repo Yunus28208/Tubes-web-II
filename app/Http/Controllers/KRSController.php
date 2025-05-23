@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jadwal;
+use App\Models\Kelas;
 use App\Models\KRS;
 use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class KRSController extends Controller
 {
@@ -13,23 +17,81 @@ class KRSController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return KRS::with(['mahasiswa', 'kelas'])->get();
+        $krs = KRS::with(['mahasiswa', 'jadwal'])->get();
+        return view('admin.krs.index', compact('krs'));
+    }
+    public function krsMahasiswa()
+    {
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Pastikan user adalah mahasiswa
+        if ($user->role !== 'mahasiswa') {
+            abort(403, 'Akses ditolak.');
+        }
+
+        // Ambil data mahasiswa dari user
+        $mahasiswa = Mahasiswa::where('user_id', $user->id)->firstOrFail();
+
+        // Ambil semua nilai KHS berdasarkan mahasiswa yang login
+        $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
+            ->where('mahasiswa_id', $mahasiswa->id)
+            ->get();
+
+        return view('mahasiswa.krs.index', compact('krs'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        $mahasiswa = Mahasiswa::all();
-        $matakuliahs = MataKuliah::all();
-        return view('krs.create', compact('mahasiswa', 'matakuliahs'));
+        // dd(auth()->user()->id);
+        $jadwal = Jadwal::with(['kelas'])->get();
+
+        return view('mahasiswa.krs.create', compact(  'jadwal'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        return KRS::create($request->all());
+        // dd('Store dipanggil');
+        // dd($request->all());
+        $validated = $request->validate([
+            'jadwal_id' => 'required|exists:jadwal,id',
+        ]);
+        $user = auth()->user();
+        $mahasiswa = Mahasiswa::where('user_id', $user->id)->first();
+        
+        if (!$mahasiswa) {
+            return back()->with('error', 'Data mahasiswa tidak ditemukan.');
+        }
+        $jadwal = Jadwal::find($validated['jadwal_id']);
+        $existing = KRS::where('mahasiswa_id', $mahasiswa->id)
+            ->where('jadwal_id', $jadwal->id)
+            ->first();
+
+        if ($existing) {
+            return back()->with('error', 'Mata kuliah ini sudah ditambahkan ke KRS.');
+        }
+        $sudahAmbil = KRS::where('mahasiswa_id', $mahasiswa->id)
+        ->whereHas('jadwal.kelas', function ($query) use ($jadwal) {
+            $query->where('mata_kuliah_id', $jadwal->kelas->mata_kuliah_id ?? null);
+        })
+        ->exists();
+
+        if ($sudahAmbil) {
+            return back()->with('error', 'Kamu sudah mengambil mata kuliah ini di kelas lain.');
+        }
+        
+        KRS::create([
+            'mahasiswa_id' => $mahasiswa->id,
+            'jadwal_id' => $jadwal->id,
+            'tahun_ajaran' => "2023/2024",
+            'semester' => $jadwal->kelas->mata_kuliah->semester,
+        ]);
+
+        return redirect()->route('krs.index');
     }
 
     /**
@@ -62,6 +124,8 @@ class KRSController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        return KRS::destroy($id);
+        $krs = Matakuliah::findOrFail($id);
+        $krs->delete();
+        return redirect()->route('krs.index');
     }
 }

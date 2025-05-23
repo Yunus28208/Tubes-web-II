@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class KRS extends Model
 {
     protected $table = 'krs'; 
-    protected $fillable = ['mahasiswa_id', 'kelas_id', 'tahun_ajaran', 'semester'];
+    protected $fillable = ['mahasiswa_id', 'jadwal_id', 'tahun_ajaran', 'semester'];
 
     public function mahasiswa() {
         return $this->belongsTo(Mahasiswa::class);
     }
 
-    public function kelas() {
-        return $this->belongsTo(Kelas::class);
+    public function jadwal() {
+        return $this->belongsTo(Jadwal::class);
     }
 
     public function khs() {
-        return $this->hasOne(KHS::class);
+        return $this->hasOne(KHS::class, 'krs_id');
     }
 
     public function absensi() {

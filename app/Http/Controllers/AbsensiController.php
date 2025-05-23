@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
+use App\Models\Dosen;
+use App\Models\Kelas;
 use App\Models\KRS;
 use Illuminate\Http\Request;
 
@@ -12,22 +14,56 @@ class AbsensiController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return Absensi::with('krs')->get();
+        $krs = KRS::with('jadwal.kelas.mata_kuliah')->get();
+
+        // Ambil unik berdasarkan mata kuliah dan kode kelas
+        $uniqueKRS = $krs->unique(function ($item) {
+            return $item->jadwal->kelas->mata_kuliah->id . '-' . $item->jadwal->kelas->kode_kelas;
+        })->values();
+
+        return view('dosen.absensi.index', ['krs' => $uniqueKRS]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(){
-        $krs = KRS::with('mahasiswa', 'matakuliah')->get();
-        return view('absensi.create', compact('krs'));
+    public function create(Request $request) {
+        $kelas = Kelas::findOrFail($request->kelas_id);
+
+        $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
+            ->whereHas('jadwal.kelas', function ($query) use ($kelas) {
+                $query->where('id', $kelas->id);
+            })
+            ->get();
+        return view('dosen.absensi.create', compact('krs','kelas'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        return Absensi::create($request->all());
+        $krsIds = $request->input('krs_id');
+        $tanggalList = $request->input('tanggal');
+        $statusList = $request->input('status');
+
+        // Validasi semua baris
+        foreach ($krsIds as $index => $krsId) {
+            $tanggal = $tanggalList[$index];
+            $status = $statusList[$index];
+
+            // Validasi sederhana
+            if (!$tanggal || !$status) {
+                continue;
+            }
+
+            Absensi::create([
+                'krs_id' => $krsId,
+                'tanggal' => $tanggal,
+                'status' => $status,
+            ]);
+        }
+
+        return redirect()->route('dosen.absensi.index');
     }
 
     /**
@@ -40,10 +76,14 @@ class AbsensiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id){
-        $absensi = Absensi::findOrFail($id);
-        $krs = KRS::with('mahasiswa', 'matakuliah')->get();
-        return view('absensi.edit', compact('absensi', 'krs'));
+    public function edit($kelas_id) {
+
+        $krsList = KRS::with(['mahasiswa', 'absensi'])
+            ->whereHas('jadwal.kelas', function ($query) use ($kelas_id) {
+                $query->where('id', $kelas_id);
+            })->get();
+
+        return view('dosen.absensi.edit', compact('krsList'));
     }
 
     /**
@@ -51,8 +91,15 @@ class AbsensiController extends Controller
      */
     public function update(Request $request, $id) {
         $absensi = Absensi::findOrFail($id);
-        $absensi->update($request->all());
-        return $absensi;
+
+        $validated = $request->validate([
+            'tanggal' => 'required|date',
+            'status' => 'required|in:Hadir,Izin,Sakit,Alpha' // sesuaikan dengan enum/status kamu
+        ]);
+
+        $absensi->update($validated);
+
+        return redirect()->route('dosen.absensi.index');
     }
 
     /**

@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KHSController;
+use App\Http\Controllers\KRSController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MataKuliahController;
-use App\Http\Controllers\KrsController;
-use App\Http\Controllers\KhsController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KelasController;
@@ -15,11 +16,12 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\UserController;
 
 // Halaman utama
-Route::get('/', function () {
-    return view('dashboard');
-});
+// Route::get('/', function () {
+//     return view('auth.register');
+// });
 
-Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
+Route::get('/',[AuthController::class, 'register'])->name('register');
+// Route::get('/mahasiswa/dashboard',[DashboardController::class, 'mahasiswa'])->name('mahasiswaDashboard');
 
 Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
 Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
@@ -29,6 +31,44 @@ Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout')
 
 // Middleware untuk area login
 // Route::middleware('auth')->group(function () {
+    //     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    // });
+    
+    
+Route::middleware(['auth', 'role:dosen'])->group(function () {
+        Route::get('/dosen/dashboard',[DashboardController::class, 'index'])->name('dosen.dashboard');
+        Route::get('/khs/create', [KHSController::class, 'create'])->name('khs.create');
+        Route::post('/khs/store', [KHSController::class, 'store'])->name('khs.store');
+        Route::get('/khs', [KHSController::class, 'index'])->name('khs.index');
+        
+        // Absensi
+        Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
+        Route::get('/absensi/create', [AbsensiController::class, 'create'])->name('absensi.create');
+        Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.store');
+        Route::get('/absensi/{id}', [AbsensiController::class, 'show'])->name('absensi.show');
+        Route::get('/absensi/{kelas_id}/edit', [AbsensiController::class, 'edit'])->name('absensi.edit');
+        Route::put('/absensi/{id}', [AbsensiController::class, 'update'])->name('absensi.update');
+        Route::delete('/absensi/{id}', [AbsensiController::class, 'destroy'])->name('absensi.destroy');
+        
+        Route::get('/profile/dosen', [ProfileController::class, 'dosen'])->name('profile.dosen.index');
+    });
+    
+Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
+    Route::get('/mahasiswa/dashboard',[DashboardController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/krs', [KRSController::class, 'krsMahasiswa'])->name('krs.mahasiswa.index');
+    Route::get('/krs/create', [KRSController::class, 'create'])->name('krs.create');
+    Route::put('/krs', [KRSController::class, 'store'])->name('krs.store');
+    Route::delete('/krs/{id}', [KRSController::class, 'destroy'])->name('krs.destroy');
+
+
+    Route::get('/khs/nilaiSaya', [KHSController::class, 'nilaiMahasiswa'])->name('khs.nilaiMahasiswa');
+
+    Route::get('/profile/mahasiswa', [ProfileController::class, 'mahasiswa'])->name('profile.mahasiswa.index');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard',[DashboardController::class, 'index'])->name('admin.dashboard');
+
     // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
     Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
@@ -55,33 +95,6 @@ Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout')
     Route::get('/matakuliah/{id}/edit', [MataKuliahController::class, 'edit'])->name('matakuliah.edit');
     Route::put('/matakuliah/{id}', [MataKuliahController::class, 'update'])->name('matakuliah.update');
     Route::delete('/matakuliah/{id}', [MataKuliahController::class, 'destroy'])->name('matakuliah.destroy');
-
-    // KRS
-    Route::get('/krs', [KrsController::class, 'index'])->name('krs.index');
-    Route::get('/krs/create', [KrsController::class, 'create'])->name('krs.create');
-    Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
-    Route::get('/krs/{id}', [KrsController::class, 'show'])->name('krs.show');
-    Route::get('/krs/{id}/edit', [KrsController::class, 'edit'])->name('krs.edit');
-    Route::put('/krs/{id}', [KrsController::class, 'update'])->name('krs.update');
-    Route::delete('/krs/{id}', [KrsController::class, 'destroy'])->name('krs.destroy');
-
-    // KHS
-    Route::get('/khs', [KhsController::class, 'index'])->name('khs.index');
-    Route::get('/khs/create', [KhsController::class, 'create'])->name('khs.create');
-    Route::post('/khs', [KhsController::class, 'store'])->name('khs.store');
-    Route::get('/khs/{id}', [KhsController::class, 'show'])->name('khs.show');
-    Route::get('/khs/{id}/edit', [KhsController::class, 'edit'])->name('khs.edit');
-    Route::put('/khs/{id}', [KhsController::class, 'update'])->name('khs.update');
-    Route::delete('/khs/{id}', [KhsController::class, 'destroy'])->name('khs.destroy');
-
-    // Absensi
-    Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
-    Route::get('/absensi/create', [AbsensiController::class, 'create'])->name('absensi.create');
-    Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.store');
-    Route::get('/absensi/{id}', [AbsensiController::class, 'show'])->name('absensi.show');
-    Route::get('/absensi/{id}/edit', [AbsensiController::class, 'edit'])->name('absensi.edit');
-    Route::put('/absensi/{id}', [AbsensiController::class, 'update'])->name('absensi.update');
-    Route::delete('/absensi/{id}', [AbsensiController::class, 'destroy'])->name('absensi.destroy');
 
     // Jadwal
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
@@ -118,4 +131,12 @@ Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout')
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-// });
+
+    // KRS
+    Route::get('/listKrs', [KRSController::class, 'index'])->name('krs.index');
+    Route::delete('/krs/{id}', [KRSController::class, 'destroy'])->name('krs.destroy');
+
+    // KHS
+
+    Route::get('/profile/admin', [ProfileController::class, 'admin'])->name('profile.admin.index');
+});

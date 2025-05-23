@@ -13,7 +13,7 @@ class MatakuliahController extends Controller
      */
     public function index() {
         $mata_kuliah = MataKuliah::all();
-        return view('matakuliah.index', compact('mata_kuliah'));
+        return view('admin.matakuliah.index', compact('mata_kuliah'));
     }
 
     /**
@@ -21,7 +21,7 @@ class MatakuliahController extends Controller
      */
     public function create(){
         $dosens = Dosen::all();
-        return view('matakuliah.create', compact('dosens'));
+        return view('admin.matakuliah.create', compact('dosens'));
     }
 
     /**
@@ -64,7 +64,7 @@ class MatakuliahController extends Controller
         $matakuliah = MataKuliah::findOrFail($id);
         $dosens = Dosen::all();
         $dosen_pengampu = explode(', ', $matakuliah->dosen_pengampu);
-        return view('matakuliah.edit', compact('matakuliah', 'dosens', 'dosen_pengampu'));
+        return view('admin.matakuliah.edit', compact('matakuliah', 'dosens', 'dosen_pengampu'));
     }
 
     /**

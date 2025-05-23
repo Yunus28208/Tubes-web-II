@@ -15,7 +15,7 @@ class JadwalController extends Controller
      */
     public function index() {
         $jadwal = Jadwal::with('kelas')->get();
-        return view('jadwal.index', compact('jadwal'));
+        return view('admin.jadwal.index', compact('jadwal'));
     }
 
     /**
@@ -25,7 +25,7 @@ class JadwalController extends Controller
         $kelas = Kelas::all();
         $mata_kuliah = MataKuliah::all();
         $dosens = Dosen::all();
-        return view('jadwal.create', compact('mata_kuliah', 'dosens', 'kelas'));
+        return view('admin.jadwal.create', compact('mata_kuliah', 'dosens', 'kelas'));
     }
 
     /**
@@ -71,7 +71,7 @@ class JadwalController extends Controller
     public function edit($id){
         $kelas = Kelas::all();
         $jadwal = Jadwal::findOrFail($id);
-        return view('jadwal.edit', compact('jadwal', 'kelas'));
+        return view('admin.jadwal.edit', compact('jadwal', 'kelas'));
     }
 
     /**

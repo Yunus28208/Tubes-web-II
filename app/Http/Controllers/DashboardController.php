@@ -11,10 +11,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // $mahasiswa = User::with('mahasiswa')->get();
-        // $prodi = Prodi::all()->count();
-        // $dosen = User::with('dosen')->get();    
-        // $kelas = Kelas::all()->count();
-        return view('dashboard');
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            return view('admin.dashboard', compact('user'));
+        } elseif ($user->role === 'mahasiswa') {
+            return view('mahasiswa.dashboard', compact('user'));
+        } elseif ($user->role === 'dosen') {
+            return view('dosen.dashboard', compact('user'));
+        } else {
+            auth()->logout();
+            return redirect()->route('auth.login');
+        }
     }
 }
