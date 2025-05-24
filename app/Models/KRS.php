@@ -22,7 +22,7 @@ class KRS extends Model
     }
 
     public function absensi() {
-        return $this->hasMany(Absensi::class);
+        return $this->hasMany(Absensi::class, 'krs_id');
     }
 }
 

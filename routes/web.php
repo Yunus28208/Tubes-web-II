@@ -42,13 +42,11 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
         Route::get('/khs', [KHSController::class, 'index'])->name('dosen.khs.index');
         
         // Absensi
-        Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
-        Route::get('/absensi/create', [AbsensiController::class, 'create'])->name('absensi.create');
-        Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.store');
-        Route::get('/absensi/{id}', [AbsensiController::class, 'show'])->name('absensi.show');
-        Route::get('/absensi/{kelas_id}/edit', [AbsensiController::class, 'edit'])->name('absensi.edit');
-        Route::put('/absensi/{id}', [AbsensiController::class, 'update'])->name('absensi.update');
-        Route::delete('/absensi/{id}', [AbsensiController::class, 'destroy'])->name('absensi.destroy');
+        Route::get('/absensi', [AbsensiController::class, 'index'])->name('dosen.absensi.index');
+        Route::get('/absensi/create', [AbsensiController::class, 'create'])->name('dosen.absensi.create');
+        Route::post('/absensi', [AbsensiController::class, 'store'])->name('dosen.absensi.store');
+        Route::get('/absensi/{kelas_id}/edit', [AbsensiController::class, 'edit'])->name('dosen.absensi.edit');
+        Route::put('/absensi', [AbsensiController::class, 'update'])->name('dosen.absensi.update');
         
         Route::get('/profile/dosen', [ProfileController::class, 'dosen'])->name('profile.dosen.index');
     });

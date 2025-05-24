@@ -78,10 +78,16 @@ class AbsensiController extends Controller
      */
     public function edit($kelas_id) {
 
-        $krsList = KRS::with(['mahasiswa', 'absensi'])
-            ->whereHas('jadwal.kelas', function ($query) use ($kelas_id) {
-                $query->where('id', $kelas_id);
-            })->get();
+        $krsList = KRS::with(['mahasiswa', 'jadwal.kelas', 'absensi'])
+        ->whereHas('jadwal.kelas', function ($query) use ($kelas_id) {
+            $query->where('id', $kelas_id);
+        })
+        ->get();
+
+        foreach ($krsList as $krs) {
+            $lastAbsensi = $krs->absensi->sortByDesc('tanggal')->first();
+            $krs->last_status = $lastAbsensi->status ?? 'alpha';
+        }
 
         return view('dosen.absensi.edit', compact('krsList'));
     }
@@ -89,15 +95,22 @@ class AbsensiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {
-        $absensi = Absensi::findOrFail($id);
+    public function update(Request $request) {
+        $krs_ids = $request->input('krs_id');
+        $tanggal = $request->input('tanggal');
+        $status = $request->input('status');
 
-        $validated = $request->validate([
-            'tanggal' => 'required|date',
-            'status' => 'required|in:Hadir,Izin,Sakit,Alpha' // sesuaikan dengan enum/status kamu
-        ]);
-
-        $absensi->update($validated);
+        foreach ($krs_ids as $index => $krs_id) {
+            Absensi::updateOrCreate(
+                [
+                    'krs_id' => $krs_id,
+                    'tanggal' => $tanggal[$index]
+                ],
+                [
+                    'status' => $status[$index]
+                ]
+            );
+        }
 
         return redirect()->route('dosen.absensi.index');
     }

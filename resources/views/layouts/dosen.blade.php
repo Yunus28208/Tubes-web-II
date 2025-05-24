@@ -18,7 +18,7 @@
                     <a href="{{route("dosen.dashboard")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('dashboard')) bg-red-800 text-white @endif">
                         🏠 Dashboard
                     </a>
-                    <a href="{{route("absensi.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('absensi*')) bg-red-800 text-white @endif">
+                    <a href="{{route("dosen.absensi.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('absensi*')) bg-red-800 text-white @endif">
                         ✅ Absensi
                     </a>
                     <a href="{{route("dosen.khs.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('khs*')) bg-red-800 text-white @endif">

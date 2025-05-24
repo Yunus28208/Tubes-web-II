@@ -10,6 +10,6 @@ class Absensi extends Model
     protected $fillable = ['krs_id', 'tanggal', 'status'];
 
     public function krs() {
-        return $this->belongsTo(KRS::class);
+        return $this->belongsTo(KRS::class, 'krs_id');
     }
 }

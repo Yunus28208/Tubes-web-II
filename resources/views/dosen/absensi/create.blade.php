@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-r from-gray-900 via-black to-red-900 text-white p-10 flex justify-center items-center">
-    <form action="{{ route("absensi.store") }}" method="POST">
+    <form action="{{ route("dosen.absensi.store") }}" method="POST">
         @csrf
         <h5>Absensi Kelas {{ $kelas->kode_kelas }} - {{ $kelas->mata_kuliah->nama }}</h5>
     <table class="min-w-full border-collapse">
