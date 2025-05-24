@@ -37,9 +37,9 @@ Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout')
     
 Route::middleware(['auth', 'role:dosen'])->group(function () {
         Route::get('/dosen/dashboard',[DashboardController::class, 'index'])->name('dosen.dashboard');
-        Route::get('/khs/create', [KHSController::class, 'create'])->name('khs.create');
-        Route::post('/khs/store', [KHSController::class, 'store'])->name('khs.store');
-        Route::get('/khs', [KHSController::class, 'index'])->name('khs.index');
+        Route::get('/khs/create', [KHSController::class, 'create'])->name('dosen.khs.create');
+        Route::post('/khs/store', [KHSController::class, 'store'])->name('dosen.khs.store');
+        Route::get('/khs', [KHSController::class, 'index'])->name('dosen.khs.index');
         
         // Absensi
         Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
