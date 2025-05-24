@@ -138,13 +138,6 @@
                         </div>
                         <span class="font-medium">KRS</span>
                     </a>
-                    
-                    <a href="{{route('khs.index')}}" class="sidebar-item flex items-center gap-4 px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('khs*')) active-item text-white @endif group">
-                        <div class="w-5 h-5 text-green-400 group-hover:text-green-300">
-                            <i data-lucide="file-bar-chart"></i>
-                        </div>
-                        <span class="font-medium">KHS</span>
-                    </a>
                 </nav>
             </div>
             

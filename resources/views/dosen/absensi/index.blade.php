@@ -24,13 +24,8 @@
                     <td class="px-4 py-2 border">{{ $a->jadwal->kelas->mata_kuliah->nama ?? '-' }}</td>
                     <td class="px-4 py-2 border text-center">
                         <input type="hidden" name="krs_id" value="{{ $a->id }}">
-                        <a href="{{ route('absensi.create', ['kelas_id' => $a->jadwal->kelas->id]) }}" class="text-blue-600 hover:underline">Tambah Absensi</a>
-                        <a href="{{ route('absensi.edit', ['kelas_id' => $a->jadwal->kelas->id]) }}" class="text-blue-600 hover:underline">Edit</a>
-                        <form action="{{ route('absensi.destroy', $a->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus?')">
-                            @csrf 
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline ml-2">Hapus</button>
-                        </form>
+                        <a href="{{ route('dosen.absensi.create', ['kelas_id' => $a->jadwal->kelas->id]) }}" class="text-blue-600 hover:underline">Tambah Absensi</a>
+                        <a href="{{ route('dosen.absensi.edit', ['kelas_id' => $a->jadwal->kelas->id]) }}" class="text-blue-600 hover:underline">Edit</a>
                     </td>
                 </tr>
                 @endforeach

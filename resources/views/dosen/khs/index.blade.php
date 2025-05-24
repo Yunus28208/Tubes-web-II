@@ -4,9 +4,6 @@
 <div class="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-red-900 text-white p-6 rounded-r-xl">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Data Nilai Mahasiswa</h2>
-        <a href="{{ route('khs.create') }}" class="bg-red-700 hover:bg-red-800 px-4 py-2 rounded-md text-white font-semibold shadow">
-            + Input Nilai
-        </a>
     </div>
 
     <div class="overflow-auto rounded-md shadow bg-gray-200 text-gray-900">
@@ -27,7 +24,7 @@
                     <td class="px-4 py-2 border">{{ $item->kelas->kode_kelas ?? '-' }}</td>
                     <td class="px-4 py-2 border text-center">
                         <input type="hidden" name="krs_id" value="{{ $item->id }}"><input type="hidden" name="krs_id" value="{{ $item->id }}">
-                        <a href="{{ route('khs.create', ['kelas_id' => $item->kelas->id]) }}" class="text-blue-600 hover:underline">Input Nilai</a>
+                        <a href="{{ route('dosen.khs.create', ['kelas_id' => $item->kelas->id]) }}" class="text-blue-600 hover:underline">Input Nilai</a>
                     </td>
                 </tr>
                 @endforeach
