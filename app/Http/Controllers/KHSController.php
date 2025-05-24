@@ -83,7 +83,7 @@ class KHSController extends Controller
             );
         }
 
-        return redirect()->route('admin.khs.index');
+        return redirect()->route('dosen.khs.index');
     }
 
     /**
