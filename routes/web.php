@@ -55,9 +55,9 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/mahasiswa/dashboard',[DashboardController::class, 'index'])->name('mahasiswa.dashboard');
-    Route::get('/krs', [KRSController::class, 'krsMahasiswa'])->name('krs.mahasiswa.index');
+    Route::get('/mahasiswa/krs', [KRSController::class, 'krsMahasiswa'])->name('krs.mahasiswa.index');
     Route::get('/krs/create', [KRSController::class, 'create'])->name('krs.create');
-    Route::put('/krs', [KRSController::class, 'store'])->name('krs.store');
+    Route::post('/krs', [KRSController::class, 'store'])->name('krs.store');
     Route::delete('/krs/{id}', [KRSController::class, 'destroy'])->name('krs.destroy');
 
 
