@@ -30,8 +30,12 @@ class KRSController extends Controller
             abort(403, 'Akses ditolak.');
         }
 
+        // dd($user->id, Mahasiswa::where('user_id', $user->id)->first());
         // Ambil data mahasiswa dari user
         $mahasiswa = Mahasiswa::where('user_id', $user->id)->firstOrFail();
+        if (!$mahasiswa) {
+            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan. Silakan hubungi admin.');
+        }
 
         // Ambil semua nilai KHS berdasarkan mahasiswa yang login
         $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
@@ -91,7 +95,7 @@ class KRSController extends Controller
             'semester' => $jadwal->kelas->mata_kuliah->semester,
         ]);
 
-        return redirect()->route('krs.index');
+        return redirect()->route('krs.mahasiswa.index');
     }
 
     /**
@@ -126,6 +130,6 @@ class KRSController extends Controller
     public function destroy($id) {
         $krs = Matakuliah::findOrFail($id);
         $krs->delete();
-        return redirect()->route('krs.index');
+        return redirect()->route('krs.mahasiswa.index');
     }
 }
