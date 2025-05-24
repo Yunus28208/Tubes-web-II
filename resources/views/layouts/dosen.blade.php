@@ -21,7 +21,7 @@
                     <a href="{{route("absensi.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('absensi*')) bg-red-800 text-white @endif">
                         ✅ Absensi
                     </a>
-                    <a href="{{route("khs.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('khs*')) bg-red-800 text-white @endif">
+                    <a href="{{route("dosen.khs.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('khs*')) bg-red-800 text-white @endif">
                         🧾 KHS
                     </a>
                     <a href="{{route("profile.dosen.index")}}" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-red-200 @if(request()->is('profile*')) bg-red-800 text-white @endif">
