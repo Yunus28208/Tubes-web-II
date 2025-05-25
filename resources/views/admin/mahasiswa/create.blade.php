@@ -181,8 +181,8 @@
                             required>
                         <option value="" disabled selected class="bg-gray-800 text-gray-400">Pilih Program Studi</option>
                         @foreach ($prodi as $prodis)
-                            <option value="{{ $prodis->id }}" 
-                                    {{ old('prodi_id') == $prodis->id ? 'selected' : '' }}
+                            <option value="{{ $prodis->id_prodi }}" 
+                                    {{ old('prodi_id') == $prodis->id_prodi ? 'selected' : '' }}
                                     class="bg-gray-800 text-white py-2">
                                 {{ $prodis->nama }}
                             </option>

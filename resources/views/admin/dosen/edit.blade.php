@@ -71,7 +71,7 @@
 
     <!-- Form -->
     <div class="glass-card rounded-xl p-8">
-        <form action="{{ route('dosen.update', $dosen->id) }}" method="POST" class="space-y-6">
+        <form action="{{ route('dosen.update', $dosen->id_dosen) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
             

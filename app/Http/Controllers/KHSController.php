@@ -16,7 +16,7 @@ class KHSController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $krs = Jadwal::whereIn('id', function ($query) {
+        $krs = Jadwal::whereIn('id_jadwal', function ($query) {
         $query->select('jadwal_id')
                 ->from('krs')
                 ->groupBy('jadwal_id');
@@ -55,7 +55,7 @@ class KHSController extends Controller
 
         $krs = KRS::with(['mahasiswa', 'jadwal.kelas', 'khs'])
             ->whereHas('jadwal.kelas', function ($query) use ($kelas) {
-                $query->where('id', $kelas->id);
+                $query->where('id_kelas', $kelas->id);
             })
             ->get();
         // $krs = KRS::with('mahasiswa')->get();

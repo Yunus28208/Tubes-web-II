@@ -17,34 +17,29 @@ class KRSController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $krs = KRS::with(['mahasiswa', 'jadwal'])->get();
-        return view('admin.krs.index', compact('krs'));
-    }
-    public function krsMahasiswa()
-    {
-        // Ambil user yang sedang login
         $user = Auth::user();
+        $user = auth()->user();
+        if($user->role === 'admin') {
+            $krs = KRS::with(['mahasiswa', 'jadwal'])->get();
+            return view('admin.krs.index', compact('krs'));
+        }elseif($user->role === 'mahasiswa') {
 
-        // Pastikan user adalah mahasiswa
-        if ($user->role !== 'mahasiswa') {
+            // Ambil data mahasiswa dari user
+            $mahasiswa = Mahasiswa::where('user_id', $user->id)->firstOrFail();
+            if (!$mahasiswa) {
+                return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan. Silakan hubungi admin.');
+            }
+
+            // Ambil semua nilai KHS berdasarkan mahasiswa yang login
+            $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
+                ->where('mahasiswa_id', $mahasiswa->id)
+                ->get();
+
+            return view('mahasiswa.krs.index', compact('krs'));
+        }else{
             abort(403, 'Akses ditolak.');
         }
-
-        // dd($user->id, Mahasiswa::where('user_id', $user->id)->first());
-        // Ambil data mahasiswa dari user
-        $mahasiswa = Mahasiswa::where('user_id', $user->id)->firstOrFail();
-        if (!$mahasiswa) {
-            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan. Silakan hubungi admin.');
-        }
-
-        // Ambil semua nilai KHS berdasarkan mahasiswa yang login
-        $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
-            ->where('mahasiswa_id', $mahasiswa->id)
-            ->get();
-
-        return view('mahasiswa.krs.index', compact('krs'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -59,10 +54,10 @@ class KRSController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        // dd('Store dipanggil');
-        // dd($request->all());
+
+        dd($request->all());
         $validated = $request->validate([
-            'jadwal_id' => 'required|exists:jadwal,id',
+            'jadwal_id' => 'required|exists:jadwal,id_jadwal',
         ]);
         $user = auth()->user();
         $mahasiswa = Mahasiswa::where('user_id', $user->id)->first();
@@ -95,7 +90,7 @@ class KRSController extends Controller
             'semester' => $jadwal->kelas->mata_kuliah->semester,
         ]);
 
-        return redirect()->route('krs.mahasiswa.index');
+        return redirect()->route('mahasiswa.krs.index');
     }
 
     /**

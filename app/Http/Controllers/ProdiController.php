@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 
@@ -11,24 +12,29 @@ class ProdiController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $prodi = Prodi::all();
-        return view('admin.prodi.index', compact('prodi'));
+        $fakultas = Fakultas::all();
+        $prodi = Prodi::with('fakultas')->get();
+        return view('admin.prodi.index', compact('prodi', 'fakultas'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        return view('admin.prodi.create');
+        $fakultas = Fakultas::all();
+        return view('admin.prodi.create', compact('fakultas'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        Prodi::create($request->all());
-        $prodi = Prodi::all();
-        return redirect()->route('prodi.index');
+        $validated = $request->validate([
+            'nama' => 'required',
+            'fakultas_id' => 'required|exists:fakultas,id_fakultas',
+        ]);
+        Prodi::create($validated);
+        return redirect()->route('admin.prodi.index');
     }
 
     /**
@@ -43,7 +49,8 @@ class ProdiController extends Controller
      */
     public function edit($id){
         $prodi = Prodi::findOrFail($id);
-        return view('admin.prodi.edit', compact('prodi'));
+        $fakultas = Fakultas::all();
+        return view('admin.prodi.edit', compact('prodi', 'fakultas'));
     }
 
     /**
@@ -51,8 +58,12 @@ class ProdiController extends Controller
      */
     public function update(Request $request, $id) {
         $prodi = Prodi::findOrFail($id);
-        $prodi->update($request->all());
-        return redirect()->route('prodi.index');
+        $validated = $request->validate([
+            'nama' => 'required',
+            'fakultas_id' => 'required|exists:fakultas,id_fakultas',
+        ]);
+        $prodi->update($validated);
+        return redirect()->route('admin.prodi.index');
     }
 
     /**

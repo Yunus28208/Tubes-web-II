@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $primaryKey = 'id_user';
     protected $fillable = [
         'username',
         'email',
@@ -47,10 +49,10 @@ class User extends Authenticatable
         ];
     }
     public function mahasiswa() {
-        return $this->hasOne(Mahasiswa::class);
+        return $this->hasOne(Mahasiswa::class, 'user_id', 'id_user');
     }
 
     public function dosen() {
-        return $this->hasOne(Dosen::class);
+        return $this->hasOne(Dosen::class, 'user_id', 'id_user');
     }
 }

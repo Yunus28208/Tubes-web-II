@@ -71,7 +71,7 @@
 
     <!-- Form -->
     <div class="glass-card rounded-xl p-8">
-        <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="POST" class="space-y-6">
+        <form action="{{ route('mahasiswa.update', $mahasiswa->id_mahasiswa) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
             
@@ -182,8 +182,8 @@
                             required>
                         <option value="" disabled class="bg-gray-800 text-gray-400">Pilih Program Studi</option>
                         @foreach($prodis as $p)
-                            <option value="{{ $p->id }}" 
-                                    {{ old('prodi_id', $mahasiswa->prodi_id) == $p->id ? 'selected' : '' }}
+                            <option value="{{ $p->id_prodi }}" 
+                                    {{ old('prodi_id', $mahasiswa->prodi_id) == $p->id_prodi ? 'selected' : '' }}
                                     class="bg-gray-800 text-white py-2">
                                 {{ $p->nama }}
                             </option>

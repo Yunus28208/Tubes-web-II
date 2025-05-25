@@ -110,7 +110,7 @@
                         </div>
                     </a>
 
-                    <a href="{{route("profile.dosen.index")}}" class="sidebar-item group flex items-center gap-4 px-6 py-4 rounded-xl @if(request()->is('profile*')) bg-gradient-to-r from-gold-500/20 to-gold-600/20 border border-gold-500/30 @else hover:bg-slate-800/50 @endif">
+                    <a href="{{route("dosen.profile.index")}}" class="sidebar-item group flex items-center gap-4 px-6 py-4 rounded-xl @if(request()->is('profile*')) bg-gradient-to-r from-gold-500/20 to-gold-600/20 border border-gold-500/30 @else hover:bg-slate-800/50 @endif">
                         <div class="flex items-center justify-center w-10 h-10 rounded-lg @if(request()->is('profile*')) gold-gradient @else bg-slate-700 group-hover:bg-slate-600 @endif transition-all duration-300">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>

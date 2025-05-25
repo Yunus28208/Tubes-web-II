@@ -71,7 +71,7 @@
 
     <!-- Form -->
     <div class="glass-card rounded-xl p-8">
-        <form action="{{ route('prodi.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.prodi.store') }}" method="POST" class="space-y-6">
             @csrf
             
             <!-- Nama Program Studi -->
@@ -107,21 +107,27 @@
                         Fakultas
                     </div>
                 </label>
-                <input type="text" 
-                       id="fakultas" 
-                       name="fakultas" 
-                       placeholder="Contoh: Fakultas Teknik"
-                       class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none"
-                       value="{{ old('fakultas') }}"
-                       required>
-                @error('fakultas')
+                <select 
+                    id="fakultas" 
+                    name="fakultas_id" 
+                    class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none" 
+                    required>
+                    <option value="" disabled selected hidden>Pilih Fakultas</option>
+                    @foreach($fakultas as $fakultasList)
+                        <option value="{{ $fakultasList->id_fakultas }}" class="bg-gray-400 focus:outline-none"
+                                {{ old('fakultas_id') == $fakultasList->id_fakultas ? 'selected' : '' }}>
+                            {{ $fakultasList->nama }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('fakultas_id')
                     <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-white/10">
-                <a href="{{ route('prodi.index') }}" 
+                <a href="{{ route('admin.prodi.index') }}" 
                    class="btn-secondary px-6 py-3 rounded-xl text-white font-medium flex items-center justify-center gap-2 group">
                     <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>

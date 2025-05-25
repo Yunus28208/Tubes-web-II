@@ -12,7 +12,7 @@ class KelasController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $kelas = Kelas::with('mata_kuliah')->get();
+        $kelas = Kelas::with(['mata_kuliah.dosen1', 'mata_kuliah.dosen2', 'mata_kuliah.dosen3'])->get();
         return view('admin.kelas.index', compact('kelas'));
     }
 
@@ -31,12 +31,12 @@ class KelasController extends Controller
         $validated = $request->validate([
             'kode_kelas' => 'required|unique:kelas,kode_kelas',
             'ruangan' => 'required',
-            'mata_kuliah_id' => 'required|exists:mata_kuliah,id',
+            'mata_kuliah_id' => 'required|exists:mata_kuliah,id_mata_kuliah',
         ]);
 
         $mata_kuliah = MataKuliah::find($validated['mata_kuliah_id']);
         
-        if (!$mata_kuliah || !$mata_kuliah->dosen_pengampu) {
+        if (!$mata_kuliah || !$mata_kuliah->dosen_pengampu_1_id) {
                 return back()->withErrors(['mata_kuliah_id' => 'Mata kuliah ini belum memiliki dosen pengampu.']);
         }
         Kelas::create([

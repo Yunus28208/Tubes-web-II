@@ -101,13 +101,13 @@
                             </td>
                             <td class="py-4 px-4 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="{{ route('jadwal.edit', $j->id) }}" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 hover:text-blue-300 p-2 rounded-lg transition-all duration-300 flex items-center justify-center">
+                                    <a href="{{ route('jadwal.edit', $j->id_jadwal) }}" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 hover:text-blue-300 p-2 rounded-lg transition-all duration-300 flex items-center justify-center">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
                                     </a>
                                     
-                                    <form action="{{ route('jadwal.destroy', $j->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
+                                    <form action="{{ route('jadwal.destroy', $j->id_jadwal) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="bg-red-600/20 hover:bg-red-600/30 text-red-400 hover:text-red-300 p-2 rounded-lg transition-all duration-300 flex items-center justify-center">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

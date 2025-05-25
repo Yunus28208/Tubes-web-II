@@ -14,8 +14,9 @@ class MahasiswaController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $prodi = Prodi::all()->count();
         $mahasiswa = Mahasiswa::with('user', 'prodi')->get();
-        return view('admin.mahasiswa.index', compact('mahasiswa'));
+        return view('admin.mahasiswa.index', compact('mahasiswa', 'prodi'));
     }
 
     /**
@@ -37,7 +38,7 @@ class MahasiswaController extends Controller
             'nama' => 'required',
             'nim' => 'required|unique:mahasiswa,nim',
             'angkatan' => 'required',
-            'prodi_id' => 'required|exists:prodi,id',
+            'prodi_id' => 'required|exists:prodi,id_prodi',
         ]);
 
         $user = User::create([
@@ -47,7 +48,7 @@ class MahasiswaController extends Controller
         ]);
 
         Mahasiswa::create([
-            'user_id' => $user->id,
+            'user_id' => $user->id_user,
             'nama' => $validated['nama'],
             'nim' => $validated['nim'],
             'angkatan' => $validated['angkatan'],
@@ -79,12 +80,12 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id) {
         $mhs = Mahasiswa::with('user')->findOrFail($id);
-        $request->validate([
-            'username' => 'required|unique:users,username,' . $mhs->user->id . ',id',
+        $validated = $request->validate([
+            'username' => 'required|unique:users,username,' . $mhs->user->id_user . ',id_user',
             'nama' => 'required',
             'nim' => 'required',
             'angkatan' => 'required',
-            'prodi_id' => 'required|exists:prodi,id',
+            'prodi_id' => 'required|exists:prodi,id_prodi',
         ]);
 
 
@@ -94,12 +95,7 @@ class MahasiswaController extends Controller
         ]);
 
         // Update tabel `mahasiswa`
-        $mhs->update([
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'angkatan' => $request->angkatan,
-            'prodi_id' => $request->prodi_id,
-        ]);
+        $mhs->update($validated);
 
         return redirect()->route('mahasiswa.index');
     }

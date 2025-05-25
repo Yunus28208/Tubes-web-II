@@ -41,7 +41,7 @@
                 <h2 class="text-2xl font-bold text-white mb-2">Data Program Studi</h2>
                 <p class="text-gray-400">Kelola informasi program studi dalam sistem</p>
             </div>
-            <a href="{{ route('prodi.create') }}" 
+            <a href="{{ route('admin.prodi.create') }}" 
                class="action-btn bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 px-6 py-3 rounded-xl text-white font-semibold shadow-lg flex items-center gap-3 group">
                 <svg class="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -91,7 +91,7 @@
                 </div>
                 <div>
                     <p class="text-gray-400 text-sm">Total Fakultas</p>
-                    <p class="text-2xl font-bold text-white">{{ $prodi->pluck('fakultas')->unique()->count() }}</p>
+                    <p class="text-2xl font-bold text-white">{{ $fakultas->count() }}</p>
                 </div>
             </div>
         </div>
@@ -134,19 +134,19 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                                {{ $prodis->fakultas }}
+                                {{ $prodis->fakultas->nama }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <div class="flex justify-center gap-2">
-                                <a href="{{ route('prodi.edit', $prodis->id) }}" 
+                                <a href="{{ route('admin.prodi.edit', $prodis->id_prodi) }}" 
                                    class="action-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 group">
                                     <svg class="w-4 h-4 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                     Edit
                                 </a>
-                                <form action="{{ route('prodi.destroy', $prodis->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data program studi ini?')" class="inline">
+                                <form action="{{ route('admin.prodi.destroy', $prodis->id_prodi) }}" method="POST" onsubmit="return confirm('Yakin hapus data program studi ini?')" class="inline">
                                     @csrf 
                                     @method('DELETE')
                                     <button type="submit" 

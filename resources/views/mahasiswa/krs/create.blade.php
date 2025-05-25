@@ -89,9 +89,9 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <form action="{{ route('krs.store') }}" method="POST">
+                                <form action="{{ route('mahasiswa.krs.store') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="jadwal_id" value="{{ $item->id }}">
+                                    <input type="hidden" name="jadwal_id" value="{{ $item->id_jadwal }}">
                                     <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1 mx-auto">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

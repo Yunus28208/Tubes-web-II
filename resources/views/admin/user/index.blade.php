@@ -403,13 +403,13 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <a href="{{ route('user.edit', $u->id) }}" class="edit-button">
+                                        <a href="{{ route('user.edit', $u->id_user) }}" class="edit-button">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                             </svg>
                                             Edit
                                         </a>
-                                        <form action="{{ route('user.destroy', $u->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
+                                        <form action="{{ route('user.destroy', $u->id_user) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
                                             @csrf 
                                             @method('DELETE')
                                             <button type="submit" class="delete-button">

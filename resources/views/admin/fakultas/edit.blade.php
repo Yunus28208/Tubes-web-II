@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('page-title', 'Edit Program Studi')
-@section('page-description', 'Perbarui data program studi dalam sistem')
+@section('page-title', 'Edit Fakultas')
+@section('page-description', 'Perbarui data fakultas dalam sistem')
 
 @section('content')
 <style>
@@ -63,15 +63,15 @@
                 </svg>
             </div>
             <div>
-                <h2 class="text-2xl font-bold text-white">Edit Program Studi</h2>
-                <p class="text-gray-400">Perbarui informasi program studi: <span class="text-emerald-400 font-medium">{{ $prodi->nama }}</span></p>
+                <h2 class="text-2xl font-bold text-white">Edit Fakultas</h2>
+                <p class="text-gray-400">Perbarui informasi fakultas: <span class="text-emerald-400 font-medium">{{ $fakultas->nama }}</span></p>
             </div>
         </div>
     </div>
 
     <!-- Form -->
     <div class="glass-card rounded-xl p-8">
-        <form action="{{ route('admin.prodi.update', $prodi->id_prodi) }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.fakultas.update', $fakultas->id_fakultas) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
             
@@ -88,47 +88,18 @@
                 <input type="text" 
                        id="nama" 
                        name="nama" 
-                       placeholder="Contoh: Teknik Informatika"
+                       placeholder="Contoh: Fakultas Teknik"
                        class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none"
-                       value="{{ old('nama', $prodi->nama) }}"
+                       value="{{ old('nama', $fakultas->nama) }}"
                        required>
                 @error('nama')
                     <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <!-- Fakultas -->
-            <div class="space-y-2">
-                <label for="fakultas" class="block text-sm font-medium text-gray-300">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                        </svg>
-                        Fakultas
-                    </div>
-                </label>
-                <select 
-                    id="fakultas" 
-                    name="fakultas_id" 
-                    class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none" 
-                    required>
-                    <option value="" disabled hidden>Pilih Fakultas</option>
-                    @foreach($fakultas as $fakultasList)
-                        <option value="{{ $fakultasList->id_fakultas }}" class="bg-gray-400 focus:outline-none" 
-                            {{ old('fakultas_id', $prodi->fakultas_id) == $fakultasList->id_fakultas ? 'selected' : '' }}>
-                            {{ $fakultasList->nama }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('fakultas')
-                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-white/10">
-                <a href="{{ route('admin.prodi.index') }}" 
+                <a href="{{ route('admin.fakultas.index') }}" 
                    class="btn-secondary px-6 py-3 rounded-xl text-white font-medium flex items-center justify-center gap-2 group">
                     <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>

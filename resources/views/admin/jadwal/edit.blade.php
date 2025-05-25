@@ -57,7 +57,7 @@
 
         <!-- Form -->
         <div class="glass-card rounded-2xl p-8">
-            <form action="{{ route('jadwal.update', $jadwal->id) }}" method="POST" class="space-y-6">
+            <form action="{{ route('jadwal.update', $jadwal->id_jadwal) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
                 
@@ -73,7 +73,7 @@
                     <select name="kelas_id" class="form-input w-full px-4 py-3 rounded-xl text-white focus:outline-none" required>
                         <option value="" class="bg-slate-800">-- Pilih Kelas --</option>
                         @foreach($kelas as $k)
-                            <option value="{{ $k->id }}" {{ $jadwal->kelas_id == $k->id ? 'selected' : '' }} class="bg-slate-800">
+                            <option value="{{ $k->id_kelas }}" {{ $jadwal->kelas_id == $k->id_kelas ? 'selected' : '' }} class="bg-slate-800">
                                 {{ $k->kode_kelas }}
                             </option>
                         @endforeach

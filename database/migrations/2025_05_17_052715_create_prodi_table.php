@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prodi', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_prodi');
             $table->string('nama');
-            $table->string('fakultas');
+            $table->foreignId('fakultas_id')->references('id_fakultas')->on('fakultas')->onDelete('cascade');
             $table->timestamps();   
         });
     }

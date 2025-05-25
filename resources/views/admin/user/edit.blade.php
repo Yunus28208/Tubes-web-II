@@ -313,7 +313,7 @@
             </div>
 
             <!-- Form -->
-            <form action="{{ route('user.update', $user->id) }}" method="POST" class="space-y-6">
+            <form action="{{ route('user.update', $user->id_user) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
                 

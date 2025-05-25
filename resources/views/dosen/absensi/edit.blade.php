@@ -78,7 +78,7 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="hidden" name="krs_id[]" value="{{ $krs->id }}">
+                                    <input type="hidden" name="krs_id[]" value="{{ $krs->id_krs }}">
                                     <input type="date" name="tanggal[]" value="{{ date('Y-m-d') }}" 
                                            class="glass-effect border border-gold-500/30 rounded-lg px-4 py-2 text-white bg-slate-800/50 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition-all duration-300" required>
                                 </td>
