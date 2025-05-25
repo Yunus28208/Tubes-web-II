@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('khs', function (Blueprint $table) {
-            $table->bigIncrements('id_khs');
-            $table->foreignId('krs_id')->references('id_krs')->on('krs')->onDelete('cascade');
-            $table->enum('nilai', ['A', 'B', 'C', 'D', 'E']);
+        Schema::create('fakultas', function (Blueprint $table) {
+            $table->bigIncrements('id_fakultas');
+            $table->string('nama', 100)->unique();
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('khs');
+        Schema::dropIfExists('fakultas');
     }
 };

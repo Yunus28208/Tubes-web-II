@@ -42,7 +42,7 @@ class DosenController extends Controller
         ]);
 
         Dosen::create([
-            'user_id' => $user->id,
+            'user_id' => $user->id_user,
             'nama' => $validated['nama'],
             'nip' => $validated['nip'],
             'bidang_keahlian' => $validated['bidang_keahlian'],
@@ -73,7 +73,7 @@ class DosenController extends Controller
         $dosen = Dosen::with('user')->findOrFail($id);
 
         $request->validate([
-            'username' => 'required|unique:users,username,'. $dosen->user->id . ',id',
+            'username' => 'required|unique:users,username,'. $dosen->user->id_user . ',id_user',
             'nama' => 'required',
             'nip' => 'required',
             'bidang_keahlian' => 'required',

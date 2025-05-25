@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mata_kuliah', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_mata_kuliah');
             $table->string('kode')->unique();
             $table->string('nama')->unique();
             $table->integer('sks');
             $table->enum('semester', ['ganjil', 'genap']);
-            $table->string('dosen_pengampu')->nullable();
+            $table->foreignId('dosen_pengampu_1_id')->nullable()->references('id_dosen')->on('dosen')->nullOnDelete();
+            $table->foreignId('dosen_pengampu_2_id')->nullable()->references('id_dosen')->on('dosen')->nullOnDelete();
+            $table->foreignId('dosen_pengampu_3_id')->nullable()->references('id_dosen')->on('dosen')->nullOnDelete();
             $table->timestamps();
         });
     }

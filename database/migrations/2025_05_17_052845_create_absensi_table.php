@@ -9,11 +9,11 @@ class CreateAbsensiTable extends Migration
     public function up()
     {
         Schema::create('absensi', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_absensi');
             $table->date('tanggal');
             $table->enum('status', ['hadir', 'izin', 'sakit', 'alpha']);
             $table->timestamps();
-            $table->foreignId('krs_id')->constrained('krs')->onDelete('cascade');
+            $table->foreignId('krs_id')->references('id_krs')->on('krs')->onDelete('cascade');
         });
     }
 

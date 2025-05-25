@@ -71,7 +71,7 @@
 
     <!-- Form -->
     <div class="glass-card rounded-xl p-8">
-        <form action="{{ route('kelas.update', $kelas->id) }}" method="POST" class="space-y-6">
+        <form action="{{ route('kelas.update', $kelas->id_kelas) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
             
@@ -138,8 +138,8 @@
                             required>
                         <option value="" disabled class="bg-gray-800 text-gray-400">Pilih Mata Kuliah</option>
                         @foreach($mata_kuliah as $mk)
-                            <option value="{{ $mk->id }}" 
-                                    {{ old('mata_kuliah_id', $kelas->mata_kuliah_id) == $mk->id ? 'selected' : '' }}
+                            <option value="{{ $mk->id_mata_kuliah }}" 
+                                    {{ old('mata_kuliah_id', $kelas->mata_kuliah_id) == $mk->id_mata_kuliah ? 'selected' : '' }}
                                     class="bg-gray-800 text-white py-2">
                                 {{ $mk->nama }} ({{ $mk->kode }})
                             </option>

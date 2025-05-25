@@ -146,14 +146,14 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $d->user->username ?? '-' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <div class="flex justify-center gap-2">
-                                <a href="{{ route('dosen.edit', $d->id) }}" 
+                                <a href="{{ route('dosen.edit', $d->id_dosen) }}" 
                                    class="action-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 group">
                                     <svg class="w-4 h-4 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                     Edit
                                 </a>
-                                <form action="{{ route('dosen.destroy', $d->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data dosen ini?')" class="inline">
+                                <form action="{{ route('dosen.destroy', $d->id_dosen) }}" method="POST" onsubmit="return confirm('Yakin hapus data dosen ini?')" class="inline">
                                     @csrf 
                                     @method('DELETE')
                                     <button type="submit" 

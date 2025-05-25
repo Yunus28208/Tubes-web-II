@@ -174,7 +174,7 @@
                 </div>
             </div>
 
-            <!-- Dosen Pengampu -->
+           <!-- Dosen Pengampu -->
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,21 +183,20 @@
                     Dosen Pengampu
                 </h3>
                 
-                @for($i = 1; $i <= 3; $i++)
+                <!-- Dosen Pengampu 1 (Wajib) -->
                 <div class="space-y-2">
-                    <label for="dosen_pengampu_{{ $i }}" class="block text-sm font-medium text-gray-300">
-                        Dosen Pengampu {{ $i }} {{ $i == 1 ? '(Wajib)' : '(Opsional)' }}
+                    <label for="dosen_pengampu_1_id" class="block text-sm font-medium text-gray-300">
+                        Dosen Pengampu 1 (Wajib)
                     </label>
                     <div class="relative">
-                        <select name="dosen_pengampu_{{ $i }}" 
-                                id="dosen_pengampu_{{ $i }}" 
+                        <select name="dosen_pengampu_1_id" id="dosen_pengampu_1_id"
                                 class="form-input w-full px-4 py-3 rounded-xl text-white focus:outline-none appearance-none pr-10"
-                                {{ $i == 1 ? 'required' : '' }}>
+                                required>
                             <option value="" class="bg-gray-800 text-gray-400">Pilih Dosen</option>
                             @foreach($dosens as $dosen)
-                                <option value="{{ $dosen->nama }}" 
-                                        {{ old("dosen_pengampu_$i") == $dosen->nama ? 'selected' : '' }}
-                                        class="bg-gray-800 text-white py-2">
+                                <option value="{{ $dosen->id_dosen }}"
+                                    {{ old('dosen_pengampu_1_id') == $dosen->id_dosen ? 'selected' : '' }}
+                                    class="bg-gray-800 text-white py-2">
                                     {{ $dosen->nama }}
                                 </option>
                             @endforeach
@@ -208,11 +207,66 @@
                             </svg>
                         </div>
                     </div>
-                    @error("dosen_pengampu_$i")
+                    @error('dosen_pengampu_1_id')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-                @endfor
+
+                <!-- Dosen Pengampu 2 (Opsional) -->
+                <div class="space-y-2">
+                    <label for="dosen_pengampu_2_id" class="block text-sm font-medium text-gray-300">
+                        Dosen Pengampu 2 (Opsional)
+                    </label>
+                    <div class="relative">
+                        <select name="dosen_pengampu_2_id" id="dosen_pengampu_2_id"
+                                class="form-input w-full px-4 py-3 rounded-xl text-white focus:outline-none appearance-none pr-10">
+                            <option value="" class="bg-gray-800 text-gray-400">Pilih Dosen</option>
+                            @foreach($dosens as $dosen)
+                                <option value="{{ $dosen->id_dosen }}"
+                                    {{ old('dosen_pengampu_2_id') == $dosen->id_dosen ? 'selected' : '' }}
+                                    class="bg-gray-800 text-white py-2">
+                                    {{ $dosen->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    @error('dosen_pengampu_2_id')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Dosen Pengampu 3 (Opsional) -->
+                <div class="space-y-2">
+                    <label for="dosen_pengampu_3_id" class="block text-sm font-medium text-gray-300">
+                        Dosen Pengampu 3 (Opsional)
+                    </label>
+                    <div class="relative">
+                        <select name="dosen_pengampu_3_id" id="dosen_pengampu_3_id"
+                                class="form-input w-full px-4 py-3 rounded-xl text-white focus:outline-none appearance-none pr-10">
+                            <option value="" class="bg-gray-800 text-gray-400">Pilih Dosen</option>
+                            @foreach($dosens as $dosen)
+                                <option value="{{ $dosen->id_dosen }}"
+                                    {{ old('dosen_pengampu_3_id') == $dosen->id_dosen ? 'selected' : '' }}
+                                    class="bg-gray-800 text-white py-2">
+                                    {{ $dosen->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    @error('dosen_pengampu_3_id')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             <!-- Action Buttons -->

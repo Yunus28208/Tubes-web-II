@@ -32,7 +32,7 @@ class AbsensiController extends Controller
 
         $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
             ->whereHas('jadwal.kelas', function ($query) use ($kelas) {
-                $query->where('id', $kelas->id);
+                $query->where('id_kelas', $kelas->id);
             })
             ->get();
         return view('dosen.absensi.create', compact('krs','kelas'));
@@ -80,7 +80,7 @@ class AbsensiController extends Controller
 
         $krsList = KRS::with(['mahasiswa', 'jadwal.kelas', 'absensi'])
         ->whereHas('jadwal.kelas', function ($query) use ($kelas_id) {
-            $query->where('id', $kelas_id);
+            $query->where('id_kelas', $kelas_id);
         })
         ->get();
 

@@ -227,7 +227,14 @@
                             <span class="font-medium text-sm lg:text-base">Dosen</span>
                         </a>
                         
-                        <a href="{{route('prodi.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('prodi*')) active-item text-white @endif group">
+                        <a href="{{route('admin.fakultas.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('fakultas*')) active-item text-white @endif group">
+                            <div class="icon-container text-orange-400 group-hover:text-orange-300">
+                                <i data-lucide="building-2"></i>
+                            </div>
+                            <span class="font-medium text-sm lg:text-base">Fakultas</span>
+                        </a>
+
+                        <a href="{{route('admin.prodi.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('prodi*')) active-item text-white @endif group">
                             <div class="icon-container text-orange-400 group-hover:text-orange-300">
                                 <i data-lucide="building-2"></i>
                             </div>

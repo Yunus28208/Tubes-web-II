@@ -12,7 +12,7 @@ class MatakuliahController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $mata_kuliah = MataKuliah::all();
+        $mata_kuliah = MataKuliah::with(['dosen1', 'dosen2', 'dosen3'])->get();
         return view('admin.matakuliah.index', compact('mata_kuliah'));
     }
 
@@ -33,17 +33,10 @@ class MatakuliahController extends Controller
         'nama' => 'required',
         'sks' => 'required|integer',
         'semester' => 'required|in:ganjil,genap',
-        'dosen_pengampu_1' => 'nullable|string',
-        'dosen_pengampu_2' => 'nullable|string',
-        'dosen_pengampu_3' => 'nullable|string',
+        'dosen_pengampu_1_id' => 'nullable|exists:dosen,id_dosen',
+        'dosen_pengampu_2_id' => 'nullable|exists:dosen,id_dosen',
+        'dosen_pengampu_3_id' => 'nullable|exists:dosen,id_dosen',
     ]);
-
-        // Gabungkan ketiga dosen menjadi satu string
-        $dosenPengampu = collect([$request->dosen_pengampu_1, $request->dosen_pengampu_2, $request->dosen_pengampu_3])
-            ->filter()
-            ->implode(', ');
-
-        $validated['dosen_pengampu'] = $dosenPengampu;
 
         MataKuliah::create($validated);
 
@@ -73,22 +66,15 @@ class MatakuliahController extends Controller
     public function update(Request $request, $id) {
         $matkul = MataKuliah::findOrFail($id);
 
-    $validated = $request->validate([
-        'kode' => 'required|unique:mata_kuliah,kode,' . $id,
-        'nama' => 'required',
-        'sks' => 'required|integer',
-        'semester' => 'required|in:ganjil,genap',
-        'dosen_pengampu_1' => 'nullable|string',
-        'dosen_pengampu_2' => 'nullable|string',
-        'dosen_pengampu_3' => 'nullable|string',
-    ]);
-
-        // Gabungkan ketiga dosen menjadi satu string
-        $dosenPengampu = collect([$request->dosen_pengampu_1, $request->dosen_pengampu_2, $request->dosen_pengampu_3])
-            ->filter()
-            ->implode(', ');
-
-        $validated['dosen_pengampu'] = $dosenPengampu;
+        $validated = $request->validate([
+            'kode' => 'required|unique:mata_kuliah,kode,' . $id. ',id_mata_kuliah',
+            'nama' => 'required',
+            'sks' => 'required|integer',
+            'semester' => 'required|in:ganjil,genap',
+            'dosen_pengampu_1_id' => 'nullable|exists:dosen,id_dosen',
+            'dosen_pengampu_2_id' => 'nullable|exists:dosen,id_dosen',
+            'dosen_pengampu_3_id' => 'nullable|exists:dosen,id_dosen',
+        ]);
 
         $matkul->update($validated);
 

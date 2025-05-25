@@ -51,7 +51,7 @@ class AuthController extends Controller
                 return redirect()->route('dosen.dashboard');
             } else {
                 auth()->logout();
-                return redirect()->route('auth.login')->with('error', 'Role tidak dikenal');
+                return redirect()->route('auth.register')->with('error', 'Role tidak dikenal');
             }
         }
 

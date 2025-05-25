@@ -131,7 +131,7 @@
                 <span class="text-2xl">📊</span>
             </div>
             <h3 class="text-white font-semibold text-lg mb-2">Total Mahasiswa</h3>
-            <p class="text-3xl font-bold text-blue-400 mb-1">1,247</p>
+            <p class="text-3xl font-bold text-blue-400 mb-1">{{ $mahasiswaCount }}</p>
             <p class="text-gray-400 text-sm">+12% dari tahun lalu</p>
         </div>
         
@@ -146,7 +146,7 @@
                 <span class="text-2xl">👨‍🏫</span>
             </div>
             <h3 class="text-white font-semibold text-lg mb-2">Total Dosen</h3>
-            <p class="text-3xl font-bold text-purple-400 mb-1">89</p>
+            <p class="text-3xl font-bold text-purple-400 mb-1">{{$dosenCount}}</p>
             <p class="text-gray-400 text-sm">+3 dosen baru</p>
         </div>
         
@@ -161,7 +161,7 @@
                 <span class="text-2xl">📚</span>
             </div>
             <h3 class="text-white font-semibold text-lg mb-2">Mata Kuliah</h3>
-            <p class="text-3xl font-bold text-emerald-400 mb-1">156</p>
+            <p class="text-3xl font-bold text-emerald-400 mb-1">{{$mata_kuliahCount}}</p>
             <p class="text-gray-400 text-sm">Semester aktif</p>
         </div>
         
@@ -176,8 +176,32 @@
                 <span class="text-2xl">🏫</span>
             </div>
             <h3 class="text-white font-semibold text-lg mb-2">Total Kelas</h3>
-            <p class="text-3xl font-bold text-orange-400 mb-1">42</p>
+            <p class="text-3xl font-bold text-orange-400 mb-1">{{$kelasCount}}</p>
             <p class="text-gray-400 text-sm">Kelas aktif</p>
+        </div>
+        <div class="stat-card glass-card rounded-xl p-6 group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                </div>
+                <span class="text-2xl">🏫</span>
+            </div>
+            <h3 class="text-white font-semibold text-lg mb-2">Total Fakultas</h3>
+            <p class="text-3xl font-bold text-orange-400 mb-1">{{$fakultasCount}}</p>
+        </div>
+        <div class="stat-card glass-card rounded-xl p-6 group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                </div>
+                <span class="text-2xl">🏫</span>
+            </div>
+            <h3 class="text-white font-semibold text-lg mb-2">Total Prodi</h3>
+            <p class="text-3xl font-bold text-orange-400 mb-1">{{$prodiCount}}</p>
         </div>
     </div>
     
