@@ -84,8 +84,8 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 bg-purple-500 rounded flex items-center justify-center text-white text-xs font-bold">
-                                {{ substr($item->krs->jadwal->kelas->kode_kelas ?? 'K', 0, 1) }}
+                            <div class="w-6 h-6 rounded flex items-center justify-center text-white text-xs font-bold">
+                                <span>{{ $item->krs->jadwal->kelas->kode_kelas}}</span>
                             </div>
                         </div>
                     </td>

@@ -61,17 +61,11 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                                        {{ substr($item->mahasiswa->nama ?? 'M', 0, 1) }}
-                                    </div>
                                     <span class="text-white font-medium">{{ $item->mahasiswa->nama ?? '-' }}</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                                        D
-                                    </div>
                                     <div>
                                         <p class="text-white font-medium">{{ $item->jadwal->kelas->mata_kuliah->nama ?? '-' }}</p>
                                         <p class="text-slate-400 text-sm">{{ $item->jadwal->kelas->mata_kuliah->kode ?? '' }}</p>
@@ -80,9 +74,6 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 bg-purple-500 rounded flex items-center justify-center text-white text-xs font-bold">
-                                        {{ substr($item->jadwal->kelas->kode_kelas ?? 'K', 0, 1) }}
-                                    </div>
                                     <span class="text-white">{{ $item->jadwal->kelas->kode_kelas ?? '-' }}</span>
                                 </div>
                             </td>

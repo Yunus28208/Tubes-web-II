@@ -54,9 +54,6 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                                        D
-                                    </div>
                                     <div>
                                         <p class="text-white font-medium">{{ $item->mata_kuliah->nama ?? '-' }}</p>
                                         <p class="text-slate-400 text-sm">{{ $item->mata_kuliah->kode ?? '' }}</p>
@@ -65,9 +62,6 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
-                                        {{ substr($item->kode_kelas ?? 'K', 0, 1) }}
-                                    </div>
                                     <span class="text-white">{{ $item->kode_kelas ?? '-' }}</span>
                                 </div>
                             </td>

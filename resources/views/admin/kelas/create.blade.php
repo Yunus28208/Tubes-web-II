@@ -88,7 +88,7 @@
                     <input type="text" 
                            id="kode_kelas" 
                            name="kode_kelas" 
-                           placeholder="Contoh: TI-1A"
+                           placeholder="Contoh: Kelas A"
                            class="form-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none"
                            value="{{ old('kode_kelas') }}"
                            required>

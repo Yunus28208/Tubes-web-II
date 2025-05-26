@@ -72,6 +72,6 @@ class ProdiController extends Controller
     public function destroy($id) {
         $prodi = Prodi::findOrFail($id);
         $prodi->delete();
-        return redirect()->route('prodi.index');
+        return redirect()->route('admin.prodi.index');
     }
 }

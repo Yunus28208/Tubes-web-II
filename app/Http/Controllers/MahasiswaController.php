@@ -97,7 +97,7 @@ class MahasiswaController extends Controller
         // Update tabel `mahasiswa`
         $mhs->update($validated);
 
-        return redirect()->route('mahasiswa.index');
+        return redirect()->route('admin.mahasiswa.index');
     }
 
     /**

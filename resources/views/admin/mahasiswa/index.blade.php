@@ -142,7 +142,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $mhs->angkatan }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                    {{ $mhs->prodi->nama ?? '-' }}
+                                    {{ $mhs->prodi->nama ?? '-' }} <br> {{ $mhs->prodi->fakultas->nama ?? '-' }}
                                 </span>
                             </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ $mhs->user->username ?? '-' }}</td>

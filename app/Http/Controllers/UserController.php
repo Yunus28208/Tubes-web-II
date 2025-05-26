@@ -28,17 +28,16 @@ class UserController extends Controller
      */
     public function store(Request $request) {
         $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email',
+        'username' => 'required',
         'password' => 'required|min:6',
     ]);
 
     User::create([
-        'name' => $request->first_name . ' ' . $request->last_name,
-        'email' => $request->email,
+        'username' => $request->username,
         'password' => Hash::make($request->password),
         'role' => $request->role
     ]);
+        return redirect()->route('admin.user.index');
     }
 
     /**

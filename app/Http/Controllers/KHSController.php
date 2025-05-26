@@ -22,7 +22,7 @@ class KHSController extends Controller
             $userId = $user->id_user;
             $dosen = Dosen::where('user_id', $userId)->first();
 
-            $idDosen = $dosen->id_dosen; // ini yang dipakai untuk cocokkan di mata_kuliah
+            $idDosen = $dosen->id_dosen;
 
             $kelasList = Kelas::with('mata_kuliah')
                 ->whereHas('mata_kuliah', function ($query) use ($idDosen) {
@@ -42,15 +42,17 @@ class KHSController extends Controller
             return view('dosen.khs.index', compact('krs'));
         }elseif ($user->role === 'mahasiswa') {
            // Ambil user yang sedang login
-            $user = Auth::user();
-
-            // Ambil data mahasiswa dari user
-            $mahasiswa = Mahasiswa::where('user_id', $user->id_user)->firstOrFail();
+           $user = Auth::user();
+           
+           // Ambil data mahasiswa dari user
+           $userId = $user->id_user;
+           $mahasiswa = Mahasiswa::where('user_id', $userId)->first();
+           $idMahasiswa = $mahasiswa->id_mahasiswa;
 
             // Ambil semua nilai KHS berdasarkan mahasiswa yang login
             $khs = KHS::with(['krs.jadwal', 'krs.jadwal.kelas'])
-                ->whereHas('krs', function ($query) use ($mahasiswa) {
-                    $query->where('mahasiswa_id', $mahasiswa->id_mahasiswa);
+                ->whereHas('krs', function ($query) use ($idMahasiswa) {
+                    $query->where('mahasiswa_id', $idMahasiswa);
                 })
                 ->get();
 
@@ -63,16 +65,19 @@ class KHSController extends Controller
      */
     public function create(Request $request) {
         $user = Auth::user();
-        $dosenId = $user->id;
+        $userId = $user->id_user;
+        $dosen = Dosen::where('user_id', $userId)->first();
+        $idDosen = $dosen->id_dosen;
+
 
         $kelas = Kelas::with('mata_kuliah')->findOrFail($request->kelas_id);
 
         // Validasi apakah dosen adalah pengampu mata kuliah ini
         $mataKuliah = $kelas->mata_kuliah;
         if (
-            $mataKuliah->dosen_pengampu_1_id !== $dosenId &&
-            $mataKuliah->dosen_pengampu_2_id !== $dosenId &&
-            $mataKuliah->dosen_pengampu_3_id !== $dosenId
+            $mataKuliah->dosen_pengampu_1_id !== $idDosen &&
+            $mataKuliah->dosen_pengampu_2_id !== $idDosen &&
+            $mataKuliah->dosen_pengampu_3_id !== $idDosen
         ) {
             abort(403, 'Anda tidak berwenang memberikan nilai untuk mata kuliah ini.');
         }
@@ -83,7 +88,7 @@ class KHSController extends Controller
             })
             ->get();
 
-        return view('dosen.khs.create', compact('krs'));
+        return view('dosen.khs.create', compact('krs', 'kelas'));
 }
 
     /**
@@ -91,7 +96,9 @@ class KHSController extends Controller
      */
     public function store(Request $request) {
         $user = Auth::user();
-        $dosenId = $user->id;
+        $userId = $user->id_user;
+        $dosen = Dosen::where('user_id', $userId)->first();
+        $idDosen = $dosen->id_dosen;
 
         $krsIds = $request->input('krs_id');
         $nilaiList = $request->input('nilai');
@@ -107,9 +114,9 @@ class KHSController extends Controller
 
             // Validasi apakah dosen ini pengampu
             if (
-                $mataKuliah->dosen_pengampu_1_id !== $dosenId &&
-                $mataKuliah->dosen_pengampu_2_id !== $dosenId &&
-                $mataKuliah->dosen_pengampu_3_id !== $dosenId
+                $mataKuliah->dosen_pengampu_1_id !== $idDosen &&
+                $mataKuliah->dosen_pengampu_2_id !== $idDosen &&
+                $mataKuliah->dosen_pengampu_3_id !== $idDosen
             ) {
                 continue; // atau bisa `abort(403)`
             }

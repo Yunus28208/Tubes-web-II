@@ -23,7 +23,7 @@
                     </div>
                     <div>
                         <h2 class="text-2xl font-bold text-white">{{ $kelas->mata_kuliah->nama ?? 'Mata Kuliah' }}</h2>
-                        <p class="text-slate-300 font-medium">Kelas {{ $kelas->kode_kelas ?? '-' }}</p>
+                        <p class="text-slate-300 font-medium">{{ $kelas->kode_kelas ?? '-' }}</p>
                         <p class="text-slate-400 text-sm">{{ count($krs ?? []) }} Mahasiswa Terdaftar</p>
                     </div>
                 </div>
