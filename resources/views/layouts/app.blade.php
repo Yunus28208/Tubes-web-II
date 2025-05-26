@@ -213,14 +213,14 @@
                             <span class="font-medium text-sm lg:text-base">Dashboard</span>
                         </a>
                         
-                        <a href="{{route('mahasiswa.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('mahasiswa*')) active-item text-white @endif group">
+                        <a href="{{route('admin.mahasiswa.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('mahasiswa*')) active-item text-white @endif group">
                             <div class="icon-container text-blue-400 group-hover:text-blue-300">
                                 <i data-lucide="graduation-cap"></i>
                             </div>
                             <span class="font-medium text-sm lg:text-base">Mahasiswa</span>
                         </a>
                         
-                        <a href="{{route('dosen.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('dosen*')) active-item text-white @endif group">
+                        <a href="{{route('admin.dosen.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('dosen*')) active-item text-white @endif group">
                             <div class="icon-container text-purple-400 group-hover:text-purple-300">
                                 <i data-lucide="user-check"></i>
                             </div>
@@ -241,28 +241,28 @@
                             <span class="font-medium text-sm lg:text-base">Program Studi</span>
                         </a>
                         
-                        <a href="{{route('matakuliah.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('matakuliah*')) active-item text-white @endif group">
+                        <a href="{{route('admin.matakuliah.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('matakuliah*')) active-item text-white @endif group">
                             <div class="icon-container text-indigo-400 group-hover:text-indigo-300">
                                 <i data-lucide="book-open"></i>
                             </div>
                             <span class="font-medium text-sm lg:text-base">Mata Kuliah</span>
                         </a>
                         
-                        <a href="{{route('kelas.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('kelas*')) active-item text-white @endif group">
+                        <a href="{{route('admin.kelas.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('kelas*')) active-item text-white @endif group">
                             <div class="icon-container text-cyan-400 group-hover:text-cyan-300">
                                 <i data-lucide="users"></i>
                             </div>
                             <span class="font-medium text-sm lg:text-base">Kelas</span>
                         </a>
                         
-                        <a href="{{route('jadwal.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('jadwal*')) active-item text-white @endif group">
+                        <a href="{{route('admin.jadwal.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('jadwal*')) active-item text-white @endif group">
                             <div class="icon-container text-pink-400 group-hover:text-pink-300">
                                 <i data-lucide="calendar"></i>
                             </div>
                             <span class="font-medium text-sm lg:text-base">Jadwal</span>
                         </a>
                         
-                        <a href="{{route('krs.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('krs*')) active-item text-white @endif group">
+                        <a href="{{route('admin.krs.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('krs*')) active-item text-white @endif group">
                             <div class="icon-container text-yellow-400 group-hover:text-yellow-300">
                                 <i data-lucide="file-text"></i>
                             </div>
@@ -277,14 +277,14 @@
                 <!-- Bottom Section -->
                 <div class="p-4 lg:p-6 border-t border-white/10 flex-shrink-0">
                     <div class="space-y-1 lg:space-y-2 mb-4">
-                        <a href="{{route('profile.admin.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('profile*')) active-item text-white @endif group">
+                        <a href="{{route('admin.profile.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('profile*')) active-item text-white @endif group">
                             <div class="icon-container text-gray-400 group-hover:text-gray-300">
                                 <i data-lucide="user"></i>
                             </div>
                             <span class="font-medium text-sm lg:text-base">Profile</span>
                         </a>
                         
-                        <a href="{{route('user.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('user*')) active-item text-white @endif group">
+                        <a href="{{route('admin.user.index')}}" class="sidebar-item flex items-center gap-3 lg:gap-4 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 @if(request()->is('user*')) active-item text-white @endif group">
                             <div class="icon-container text-red-400 group-hover:text-red-300">
                                 <i data-lucide="settings"></i>
                             </div>

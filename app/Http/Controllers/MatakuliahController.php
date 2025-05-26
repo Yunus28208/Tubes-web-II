@@ -40,7 +40,7 @@ class MatakuliahController extends Controller
 
         MataKuliah::create($validated);
 
-        return redirect()->route('matakuliah.index');
+        return redirect()->route('admin.matakuliah.index');
     }
 
     /**
@@ -78,7 +78,7 @@ class MatakuliahController extends Controller
 
         $matkul->update($validated);
 
-        return redirect()->route('matakuliah.index');
+        return redirect()->route('admin.matakuliah.index');
     }
 
     /**
@@ -87,6 +87,6 @@ class MatakuliahController extends Controller
     public function destroy($id) {
         $matkul = Matakuliah::findOrFail($id);
         $matkul->delete();
-        return redirect()->route('matakuliah.index');
+        return redirect()->route('admin.matakuliah.index');
     }
 }

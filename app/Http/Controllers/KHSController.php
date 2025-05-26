@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
 use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\KHS;
@@ -16,67 +17,103 @@ class KHSController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $krs = Jadwal::whereIn('id_jadwal', function ($query) {
-        $query->select('jadwal_id')
-                ->from('krs')
-                ->groupBy('jadwal_id');
-    })->with('kelas.mata_kuliah')->get();
-        return view('dosen.khs.index', compact('krs'));
-    }
-
-    public function nilaiMahasiswa()
-    {
-        // Ambil user yang sedang login
         $user = Auth::user();
+        if ($user->role === 'dosen') {
+            $userId = $user->id_user;
+            $dosen = Dosen::where('user_id', $userId)->first();
 
-        // Pastikan user adalah mahasiswa
-        if ($user->role !== 'mahasiswa') {
-            abort(403, 'Akses ditolak.');
+            $idDosen = $dosen->id_dosen; // ini yang dipakai untuk cocokkan di mata_kuliah
+
+            $kelasList = Kelas::with('mata_kuliah')
+                ->whereHas('mata_kuliah', function ($query) use ($idDosen) {
+                    $query->where('dosen_pengampu_1_id', $idDosen)
+                        ->orWhere('dosen_pengampu_2_id', $idDosen)
+                        ->orWhere('dosen_pengampu_3_id', $idDosen);
+                })
+                ->get();
+
+            return view('dosen.khs.index', compact('kelasList'));
+        }elseif ($user->role === 'admin') {
+            $krs = Jadwal::whereIn('id_jadwal', function ($query) {
+            $query->select('jadwal_id')
+                    ->from('krs')
+                    ->groupBy('jadwal_id');
+            })->with('kelas.mata_kuliah')->get();
+            return view('dosen.khs.index', compact('krs'));
+        }elseif ($user->role === 'mahasiswa') {
+           // Ambil user yang sedang login
+            $user = Auth::user();
+
+            // Ambil data mahasiswa dari user
+            $mahasiswa = Mahasiswa::where('user_id', $user->id_user)->firstOrFail();
+
+            // Ambil semua nilai KHS berdasarkan mahasiswa yang login
+            $khs = KHS::with(['krs.jadwal', 'krs.jadwal.kelas'])
+                ->whereHas('krs', function ($query) use ($mahasiswa) {
+                    $query->where('mahasiswa_id', $mahasiswa->id_mahasiswa);
+                })
+                ->get();
+
+            return view('mahasiswa.khs.index', compact('khs'));
         }
-
-        // Ambil data mahasiswa dari user
-        $mahasiswa = Mahasiswa::where('user_id', $user->id)->firstOrFail();
-
-        // Ambil semua nilai KHS berdasarkan mahasiswa yang login
-        $khs = KHS::with(['krs.jadwal', 'krs.jadwal.kelas'])
-            ->whereHas('krs', function ($query) use ($mahasiswa) {
-                $query->where('mahasiswa_id', $mahasiswa->id);
-            })
-            ->get();
-
-        return view('mahasiswa.khs.index', compact('khs'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request) {
-        $kelas = Kelas::findOrFail($request->kelas_id);
+        $user = Auth::user();
+        $dosenId = $user->id;
+
+        $kelas = Kelas::with('mata_kuliah')->findOrFail($request->kelas_id);
+
+        // Validasi apakah dosen adalah pengampu mata kuliah ini
+        $mataKuliah = $kelas->mata_kuliah;
+        if (
+            $mataKuliah->dosen_pengampu_1_id !== $dosenId &&
+            $mataKuliah->dosen_pengampu_2_id !== $dosenId &&
+            $mataKuliah->dosen_pengampu_3_id !== $dosenId
+        ) {
+            abort(403, 'Anda tidak berwenang memberikan nilai untuk mata kuliah ini.');
+        }
 
         $krs = KRS::with(['mahasiswa', 'jadwal.kelas', 'khs'])
             ->whereHas('jadwal.kelas', function ($query) use ($kelas) {
-                $query->where('id_kelas', $kelas->id);
+                $query->where('id_kelas', $kelas->id_kelas);
             })
             ->get();
-        // $krs = KRS::with('mahasiswa')->get();
+
         return view('dosen.khs.create', compact('krs'));
-    }
+}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+        $user = Auth::user();
+        $dosenId = $user->id;
+
         $krsIds = $request->input('krs_id');
         $nilaiList = $request->input('nilai');
 
         foreach ($krsIds as $index => $krsId) {
             $nilai = $nilaiList[$index];
 
-            if (!$nilai) {
-                continue;
+            if (!$nilai) continue;
+
+            $krs = KRS::with('jadwal.kelas.mata_kuliah')->findOrFail($krsId);
+
+            $mataKuliah = $krs->jadwal->kelas->mata_kuliah;
+
+            // Validasi apakah dosen ini pengampu
+            if (
+                $mataKuliah->dosen_pengampu_1_id !== $dosenId &&
+                $mataKuliah->dosen_pengampu_2_id !== $dosenId &&
+                $mataKuliah->dosen_pengampu_3_id !== $dosenId
+            ) {
+                continue; // atau bisa `abort(403)`
             }
 
-            // Update jika sudah ada, atau buat baru jika belum
             KHS::updateOrCreate(
                 ['krs_id' => $krsId],
                 ['nilai' => $nilai]
@@ -84,7 +121,7 @@ class KHSController extends Controller
         }
 
         return redirect()->route('dosen.khs.index');
-    }
+}
 
     /**
      * Display the specified resource.

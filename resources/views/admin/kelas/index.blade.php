@@ -41,7 +41,7 @@
                 <h2 class="text-2xl font-bold text-white mb-2">Data Kelas</h2>
                 <p class="text-gray-400">Kelola informasi kelas dalam sistem</p>
             </div>
-            <a href="{{ route('kelas.create') }}" 
+            <a href="{{ route('admin.kelas.create') }}" 
                class="action-btn bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 px-6 py-3 rounded-xl text-white font-semibold shadow-lg flex items-center gap-3 group">
                 <svg class="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -180,14 +180,14 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <div class="flex justify-center gap-2">
-                                <a href="{{ route('kelas.edit', $k->id_kelas) }}" 
+                                <a href="{{ route('admin.kelas.edit', $k->id_kelas) }}" 
                                    class="action-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 group">
                                     <svg class="w-4 h-4 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                     Edit
                                 </a>
-                                <form action="{{ route('kelas.destroy', $k->id_kelas) }}" method="POST" onsubmit="return confirm('Yakin hapus kelas ini?')" class="inline">
+                                <form action="{{ route('admin.kelas.destroy', $k->id_kelas) }}" method="POST" onsubmit="return confirm('Yakin hapus kelas ini?')" class="inline">
                                     @csrf 
                                     @method('DELETE')
                                     <button type="submit" 

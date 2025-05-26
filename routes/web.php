@@ -16,9 +16,8 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\UserController;
 
-Route::get('/',[AuthController::class, 'register'])->name('register');
+Route::get('/',[AuthController::class, 'login'])->name('auth.login');
 
-Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
 Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
@@ -37,7 +36,9 @@ Route::prefix('dosen')->name('dosen.')->middleware(['auth', 'role:dosen'])->grou
         Route::get('/absensi/{kelas_id}/edit', [AbsensiController::class, 'edit'])->name('absensi.edit');
         Route::put('/absensi', [AbsensiController::class, 'update'])->name('absensi.update');
         
-        Route::get('/profile', [ProfileController::class, 'dosen'])->name('profile.index');
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     });
     
 Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(['auth', 'role:mahasiswa'])->group(function () {
@@ -47,13 +48,15 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(['auth', 'role:mahasi
     Route::post('/krs', [KRSController::class, 'store'])->name('krs.store');
     Route::delete('/krs/{id}', [KRSController::class, 'destroy'])->name('krs.destroy');
 
-    Route::get('/khs/nilaiSaya', [KHSController::class, 'nilaiMahasiswa'])->name('khs.nilaiMahasiswa');
+    Route::get('/khs/nilaiSaya', [KHSController::class, 'index'])->name('khs.index');
 
-    Route::get('/profile', [ProfileController::class, 'mahasiswa'])->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard',[DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
     // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
@@ -101,22 +104,22 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
 
     // Prodi
-    Route::get('/prodi', [ProdiController::class, 'index'])->name('admin.prodi.index');
-    Route::get('/prodi/create', [ProdiController::class, 'create'])->name('admin.prodi.create');
-    Route::post('/prodi', [ProdiController::class, 'store'])->name('admin.prodi.store');
-    Route::get('/prodi/{id}', [ProdiController::class, 'show'])->name('admin.prodi.show');
-    Route::get('/prodi/{id}/edit', [ProdiController::class, 'edit'])->name('admin.prodi.edit');
-    Route::put('/prodi/{id}', [ProdiController::class, 'update'])->name('admin.prodi.update');
-    Route::delete('/prodi/{id}', [ProdiController::class, 'destroy'])->name('admin.prodi.destroy');
+    Route::get('/prodi', [ProdiController::class, 'index'])->name('prodi.index');
+    Route::get('/prodi/create', [ProdiController::class, 'create'])->name('prodi.create');
+    Route::post('/prodi', [ProdiController::class, 'store'])->name('prodi.store');
+    Route::get('/prodi/{id}', [ProdiController::class, 'show'])->name('prodi.show');
+    Route::get('/prodi/{id}/edit', [ProdiController::class, 'edit'])->name('prodi.edit');
+    Route::put('/prodi/{id}', [ProdiController::class, 'update'])->name('prodi.update');
+    Route::delete('/prodi/{id}', [ProdiController::class, 'destroy'])->name('prodi.destroy');
 
     // Fakultas
-    Route::get('/fakultas', [FakultasController::class, 'index'])->name('admin.fakultas.index');
-    Route::get('/fakultas/create', [FakultasController::class, 'create'])->name('admin.fakultas.create');
-    Route::post('/fakultas', [FakultasController::class, 'store'])->name('admin.fakultas.store');
-    Route::get('/fakultas/{id}', [FakultasController::class, 'show'])->name('admin.fakultas.show');
-    Route::get('/fakultas/{id}/edit', [FakultasController::class, 'edit'])->name('admin.fakultas.edit');
-    Route::put('/fakultas/{id}', [FakultasController::class, 'update'])->name('admin.fakultas.update');
-    Route::delete('/fakultas/{id}', [FakultasController::class, 'destroy'])->name('admin.fakultas.destroy');
+    Route::get('/fakultas', [FakultasController::class, 'index'])->name('fakultas.index');
+    Route::get('/fakultas/create', [FakultasController::class, 'create'])->name('fakultas.create');
+    Route::post('/fakultas', [FakultasController::class, 'store'])->name('fakultas.store');
+    Route::get('/fakultas/{id}', [FakultasController::class, 'show'])->name('fakultas.show');
+    Route::get('/fakultas/{id}/edit', [FakultasController::class, 'edit'])->name('fakultas.edit');
+    Route::put('/fakultas/{id}', [FakultasController::class, 'update'])->name('fakultas.update');
+    Route::delete('/fakultas/{id}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
 
     // User
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
@@ -133,5 +136,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     // KHS
 
-    Route::get('/profile/admin', [ProfileController::class, 'admin'])->name('profile.admin.index');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });

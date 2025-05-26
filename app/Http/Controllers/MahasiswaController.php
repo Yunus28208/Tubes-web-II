@@ -55,7 +55,7 @@ class MahasiswaController extends Controller
             'prodi_id' => $validated['prodi_id'],
         ]);
 
-        return redirect()->route('mahasiswa.index');
+        return redirect()->route('admin.mahasiswa.index');
     }
 
     /**
@@ -105,7 +105,9 @@ class MahasiswaController extends Controller
      */
     public function destroy($id) {
         $mhs = Mahasiswa::findOrFail($id);
+        $user = User::findOrFail($mhs->user_id);
         $mhs->delete();
-        return redirect()->route('mahasiswa.index');
+        $user->delete();
+        return redirect()->route('admin.mahasiswa.index');
     }
 }

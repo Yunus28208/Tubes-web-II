@@ -25,14 +25,14 @@ class KRSController extends Controller
         }elseif($user->role === 'mahasiswa') {
 
             // Ambil data mahasiswa dari user
-            $mahasiswa = Mahasiswa::where('user_id', $user->id)->firstOrFail();
+            $mahasiswa = Mahasiswa::where('user_id', $user->id_user)->firstOrFail();
             if (!$mahasiswa) {
                 return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan. Silakan hubungi admin.');
             }
 
             // Ambil semua nilai KHS berdasarkan mahasiswa yang login
             $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
-                ->where('mahasiswa_id', $mahasiswa->id)
+                ->where('mahasiswa_id', $mahasiswa->id_mahasiswa)
                 ->get();
 
             return view('mahasiswa.krs.index', compact('krs'));
@@ -55,25 +55,25 @@ class KRSController extends Controller
      */
     public function store(Request $request) {
 
-        dd($request->all());
+        // dd($request->all());
         $validated = $request->validate([
             'jadwal_id' => 'required|exists:jadwal,id_jadwal',
         ]);
         $user = auth()->user();
-        $mahasiswa = Mahasiswa::where('user_id', $user->id)->first();
+        $mahasiswa = Mahasiswa::where('user_id', $user->id_user)->first();
         
         if (!$mahasiswa) {
             return back()->with('error', 'Data mahasiswa tidak ditemukan.');
         }
         $jadwal = Jadwal::find($validated['jadwal_id']);
-        $existing = KRS::where('mahasiswa_id', $mahasiswa->id)
-            ->where('jadwal_id', $jadwal->id)
+        $existing = KRS::where('mahasiswa_id', $mahasiswa->id_mahasiswa)
+            ->where('jadwal_id', $jadwal->id_jadwal)
             ->first();
 
         if ($existing) {
             return back()->with('error', 'Mata kuliah ini sudah ditambahkan ke KRS.');
         }
-        $sudahAmbil = KRS::where('mahasiswa_id', $mahasiswa->id)
+        $sudahAmbil = KRS::where('mahasiswa_id', $mahasiswa->id_mahasiswa)
         ->whereHas('jadwal.kelas', function ($query) use ($jadwal) {
             $query->where('mata_kuliah_id', $jadwal->kelas->mata_kuliah_id ?? null);
         })
@@ -84,8 +84,8 @@ class KRSController extends Controller
         }
         
         KRS::create([
-            'mahasiswa_id' => $mahasiswa->id,
-            'jadwal_id' => $jadwal->id,
+            'mahasiswa_id' => $mahasiswa->id_mahasiswa,
+            'jadwal_id' => $jadwal->id_jadwal,
             'tahun_ajaran' => "2023/2024",
             'semester' => $jadwal->kelas->mata_kuliah->semester,
         ]);
@@ -123,8 +123,13 @@ class KRSController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        $krs = Matakuliah::findOrFail($id);
+        $krs = KRS::findOrFail($id);
         $krs->delete();
-        return redirect()->route('krs.mahasiswa.index');
+        $user = Auth::user();
+        if($user->role  === 'admin'){
+            return redirect()->route('admin.krs.index');
+        }elseif($user->role === 'mahasiswa'){
+            return redirect()->route('mahasiswa.krs.index');
+        }
     }
 }

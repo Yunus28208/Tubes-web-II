@@ -48,7 +48,7 @@ class DosenController extends Controller
             'bidang_keahlian' => $validated['bidang_keahlian'],
         ]); 
 
-        return redirect()->route('dosen.index');
+        return redirect()->route('admin.dosen.index');
     }
 
     /**
@@ -92,7 +92,7 @@ class DosenController extends Controller
             'bidang_keahlian' => $request->bidang_keahlian,
         ]);
 
-        return redirect()->route('dosen.index');
+        return redirect()->route('admin.dosen.index');
     }
 
     /**
@@ -100,7 +100,9 @@ class DosenController extends Controller
      */
     public function destroy($id) {
         $dosen = Dosen::findOrFail($id);
+        $user = User::findOrFail($dosen->user_id);
         $dosen->delete();
-        return redirect()->route('dosen.index');
+        $user->delete();
+        return redirect()->route('admin.dosen.index');
     }
 }

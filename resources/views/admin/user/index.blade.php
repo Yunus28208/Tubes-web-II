@@ -288,7 +288,7 @@
                     <h2 class="text-2xl font-bold text-white mb-2">Data User</h2>
                     <p class="text-gray-400">Kelola informasi pengguna dalam sistem</p>
                 </div>
-                <a href="{{ route('user.create') }}" class="add-button">
+                <a href="{{ route('admin.user.create') }}" class="add-button">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -403,13 +403,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <a href="{{ route('user.edit', $u->id_user) }}" class="edit-button">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                            </svg>
-                                            Edit
-                                        </a>
-                                        <form action="{{ route('user.destroy', $u->id_user) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
+                                        <form action="{{ route('admin.user.destroy', $u->id_user) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
                                             @csrf 
                                             @method('DELETE')
                                             <button type="submit" class="delete-button">

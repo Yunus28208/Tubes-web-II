@@ -57,7 +57,7 @@
 
         <!-- Form -->
         <div class="glass-card rounded-2xl p-8">
-            <form action="{{ route('jadwal.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('admin.jadwal.store') }}" method="POST" class="space-y-6">
                 @csrf
                 
                 <!-- Kelas -->
@@ -72,7 +72,7 @@
                     <select name="kelas_id" class="form-input w-full px-4 py-3 rounded-xl text-white focus:outline-none" required>
                         <option value="" class="bg-slate-800">-- Pilih Kelas --</option>
                         @foreach($kelas as $k)
-                            <option value="{{ $k->id_kelas }}" class="bg-slate-800">{{ $k->kode_kelas }}</option>
+                            <option value="{{ $k->id_kelas }}" class="bg-slate-800">{{ $k->kode_kelas . " - " . $k->mata_kuliah->nama}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -131,7 +131,7 @@
                         Simpan Jadwal
                     </button>
                     
-                    <a href="{{ route('jadwal.index') }}" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                    <a href="{{ route('admin.jadwal.index') }}" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
