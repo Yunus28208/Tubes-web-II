@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function edit($id){
         $user = User::findOrFail($id);
-        return view('admin.user.edit', compact('user'));
+        return view('admin.user.show', compact('user'));
     }
 
     /**
@@ -69,7 +69,8 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        User::destroy($id);
-        return response()->json(['message' => 'Deleted']);
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.user.index');
     }   
 }

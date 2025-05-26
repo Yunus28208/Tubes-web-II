@@ -55,7 +55,7 @@ class JadwalController extends Controller
             'ruangan' => $kelas->ruangan,
         ]);
 
-        return redirect()->route('jadwal.index');
+        return redirect()->route('admin.jadwal.index');
     }
 
     /**
@@ -80,7 +80,7 @@ class JadwalController extends Controller
     public function update(Request $request, $id) {
         $jadwal = Jadwal::findOrFail($id);
         $jadwal->update($request->all());
-        return redirect()->route('jadwal.index');
+        return redirect()->route('admin.jadwal.index');
     }
 
     /**
@@ -89,6 +89,6 @@ class JadwalController extends Controller
     public function destroy($id) {
         $jadwal = Jadwal::findOrFail($id);
         $jadwal->delete();
-        return redirect()->route('jadwal.index');
+        return redirect()->route('admin.jadwal.index');
     }
 }

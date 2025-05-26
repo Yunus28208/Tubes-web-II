@@ -75,9 +75,7 @@
                 <tr class="hover:bg-slate-600 transition-colors duration-200">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                                D
-                            </div>
+                            
                             <div>
                                 <p class="text-white font-medium">{{ $item->krs->jadwal->kelas->mata_kuliah->nama ?? '-' }}</p>
                                 <p class="text-slate-400 text-sm">Semester {{ $item->krs->jadwal->kelas->mata_kuliah->semester ?? '-' }}</p>
@@ -89,33 +87,26 @@
                             <div class="w-6 h-6 bg-purple-500 rounded flex items-center justify-center text-white text-xs font-bold">
                                 {{ substr($item->krs->jadwal->kelas->kode_kelas ?? 'K', 0, 1) }}
                             </div>
-                            <span class="text-white">{{ $item->krs->jadwal->kelas->kode_kelas ?? '-' }}</span>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-center">
                         @php
                             $nilai = $item->nilai;
                             $gradeClass = '';
-                            $gradeColor = '';
                             if($nilai >= 85) {
-                                $gradeClass = 'A';
                                 $gradeColor = 'bg-green-100 text-green-800';
                             } elseif($nilai >= 70) {
-                                $gradeClass = 'B';
                                 $gradeColor = 'bg-blue-100 text-blue-800';
                             } elseif($nilai >= 60) {
-                                $gradeClass = 'C';
                                 $gradeColor = 'bg-yellow-100 text-yellow-800';
                             } elseif($nilai >= 50) {
-                                $gradeClass = 'D';
                                 $gradeColor = 'bg-red-100 text-red-800';
                             } else {
-                                $gradeClass = 'E';
                                 $gradeColor = 'bg-gray-100 text-gray-800';
                             }
                         @endphp
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $gradeColor }}">
-                            {{ $nilai }} ({{ $gradeClass }})
+                            {{ $nilai }}
                         </span>
                     </td>
                 </tr>

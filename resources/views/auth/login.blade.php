@@ -284,15 +284,6 @@
                                         Sign In
                                     </button>
                                 </form>
-
-                                <div class="mt-8 text-center">
-                                    <p class="text-gray-300">
-                                        Don't have an account? 
-                                        <a href="{{ route('auth.register') }}" class="text-yellow-400 hover:text-yellow-300 font-semibold underline transition-colors">
-                                            Create Account
-                                        </a>
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>

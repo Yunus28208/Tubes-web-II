@@ -45,7 +45,7 @@ class KelasController extends Controller
             'mata_kuliah_id' => $validated['mata_kuliah_id'],
         ]); 
 
-        return redirect()->route('kelas.index');
+        return redirect()->route('admin.kelas.index');
     }
 
     /**
@@ -70,7 +70,7 @@ class KelasController extends Controller
     public function update(Request $request, $id) {
         $kelas = Kelas::findOrFail($id);
         $kelas->update($request->all());
-        return redirect()->route('kelas.index');
+        return redirect()->route('admin.kelas.index');
     }
 
     /**
@@ -79,6 +79,6 @@ class KelasController extends Controller
     public function destroy($id) {
         $kelas = Kelas::findOrFail($id);
         $kelas->delete();
-        return redirect()->route('kelas.index');
+        return redirect()->route('admin.kelas.index');
     }
 }

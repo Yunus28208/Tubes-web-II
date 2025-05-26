@@ -71,7 +71,7 @@
 
     <!-- Form -->
     <div class="glass-card rounded-xl p-8">
-        <form action="{{ route('mahasiswa.update', $mahasiswa->id_mahasiswa) }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.mahasiswa.update', $mahasiswa->id_mahasiswa) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
             
@@ -203,7 +203,7 @@
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-white/10">
-                <a href="{{ route('mahasiswa.index') }}" 
+                <a href="{{ route('admin.mahasiswa.index') }}" 
                    class="btn-secondary px-6 py-3 rounded-xl text-white font-medium flex items-center justify-center gap-2 group">
                     <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>

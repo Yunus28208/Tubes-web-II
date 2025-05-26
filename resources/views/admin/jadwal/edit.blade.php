@@ -57,7 +57,7 @@
 
         <!-- Form -->
         <div class="glass-card rounded-2xl p-8">
-            <form action="{{ route('jadwal.update', $jadwal->id_jadwal) }}" method="POST" class="space-y-6">
+            <form action="{{ route('admin.jadwal.update', $jadwal->id_jadwal) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
                 
@@ -134,7 +134,7 @@
                         Update Jadwal
                     </button>
                     
-                    <a href="{{ route('jadwal.index') }}" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
+                    <a href="{{ route('admin.jadwal.index') }}" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>

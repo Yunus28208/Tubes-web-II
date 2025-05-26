@@ -15,7 +15,7 @@
                 <h2 class="text-xl font-semibold text-white mb-1">Data KRS</h2>
                 <p class="text-slate-400 text-sm">Kelola mata kuliah yang telah dipilih</p>
             </div>
-            <a href="{{ route('krs.create') }}" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-white font-medium shadow-lg transition-colors duration-200 flex items-center gap-2">
+            <a href="{{ route('mahasiswa.krs.create') }}" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-white font-medium shadow-lg transition-colors duration-200 flex items-center gap-2">
                 <span class="text-lg">+</span>
                 Tambah KRS
             </a>
@@ -97,7 +97,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <form action="{{ route('krs.destroy', $item->id_krs) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus?')">
+                                <form action="{{ route('mahasiswa.krs.destroy', $item->id_krs) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus?')">
                                     @csrf 
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1 mx-auto">

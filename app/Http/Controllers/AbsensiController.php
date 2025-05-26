@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Absensi;
 use App\Models\Dosen;
+use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\KRS;
 use Illuminate\Http\Request;
@@ -14,14 +15,20 @@ class AbsensiController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $krs = KRS::with('jadwal.kelas.mata_kuliah')->get();
+        $dosenId = auth()->user()->dosen->id_dosen;
 
-        // Ambil unik berdasarkan mata kuliah dan kode kelas
-        $uniqueKRS = $krs->unique(function ($item) {
-            return $item->jadwal->kelas->mata_kuliah->id . '-' . $item->jadwal->kelas->kode_kelas;
-        })->values();
+        $krs = KRS::with('jadwal.kelas.mata_kuliah')
+            ->whereHas('jadwal.kelas.mata_kuliah', function ($query) use ($dosenId) {
+                $query->where('dosen_pengampu_1_id', $dosenId)
+                    ->orWhere('dosen_pengampu_2_id', $dosenId)
+                    ->orWhere('dosen_pengampu_3_id', $dosenId);
+            })
+            ->get()
+            ->unique(function ($item) {
+                return $item->jadwal->kelas->id_kelas . '-' . $item->jadwal->kelas->mata_kuliah->id_mata_kuliah;
+            });
 
-        return view('dosen.absensi.index', ['krs' => $uniqueKRS]);
+        return view('dosen.absensi.index', compact('krs'));
     }
 
     /**
@@ -32,7 +39,7 @@ class AbsensiController extends Controller
 
         $krs = KRS::with(['mahasiswa', 'jadwal.kelas'])
             ->whereHas('jadwal.kelas', function ($query) use ($kelas) {
-                $query->where('id_kelas', $kelas->id);
+                $query->where('id_kelas', $kelas->id_kelas);
             })
             ->get();
         return view('dosen.absensi.create', compact('krs','kelas'));

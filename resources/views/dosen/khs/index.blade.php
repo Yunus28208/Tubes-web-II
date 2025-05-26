@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <p class="text-slate-400 text-sm">Total Mata Kuliah</p>
-                    <p class="text-white text-xl font-bold">{{ $krs->count() }}</p>
+                    <p class="text-white text-xl font-bold">{{ $kelasList->count() }}</p>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-600">
-                        @foreach ($krs as $item)
+                        @foreach ($kelasList as $item)
                         <tr class="hover:bg-slate-600 transition-colors duration-200">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
@@ -58,21 +58,21 @@
                                         D
                                     </div>
                                     <div>
-                                        <p class="text-white font-medium">{{ $item->kelas->mata_kuliah->nama ?? '-' }}</p>
-                                        <p class="text-slate-400 text-sm">{{ $item->kelas->mata_kuliah->kode ?? '' }}</p>
+                                        <p class="text-white font-medium">{{ $item->mata_kuliah->nama ?? '-' }}</p>
+                                        <p class="text-slate-400 text-sm">{{ $item->mata_kuliah->kode ?? '' }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
                                     <div class="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
-                                        {{ substr($item->kelas->kode_kelas ?? 'K', 0, 1) }}
+                                        {{ substr($item->kode_kelas ?? 'K', 0, 1) }}
                                     </div>
-                                    <span class="text-white">{{ $item->kelas->kode_kelas ?? '-' }}</span>
+                                    <span class="text-white">{{ $item->kode_kelas ?? '-' }}</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <a href="{{ route('dosen.khs.create', ['kelas_id' => $item->kelas->id_kelas]) }}" 
+                                <a href="{{ route('dosen.khs.create', ['kelas_id' => $item?->id_kelas]) }}" 
                                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1 mx-auto w-fit">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
